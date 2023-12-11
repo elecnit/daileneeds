@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Layout Example</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+           
+        }
+
+         .img-holder{
+            display: flex;
+            height: 80vh;
+          
+         }
+        .left-block,
+        .right-block {
+            width: 20%;
+            height: 100%;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            
+        }
+        
+
+
+        .middle-block {
+            flex-grow: 1;
+            margin-top: 50px;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            align-items: center;
+            vertical-align: bottom;
+            height: 100%    
+           }
+
+        .image-container {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            
+            display: inline-block;       
+            
+        }
+        
+        #img {
+            transform: rotateX(90deg) scale(1);
+           }
+        #img2 {
+            transform: rotateX(90deg) scale(1);
+           }
+        
+        .img-do {
+            animation: img-rotate .5s ease  forwards , img-rotate-reverse .5s  .75s forwards ;
+        }
+        
+        .img2-do {
+            animation: img-rotate .5s ease 1.5s  forwards , img-rotate-reverse .5s  3s forwards ;
+        }
+        @keyframes img-rotate {
+            0% {
+                transform: rotateX(90deg) scale(1);
+            }
+            40% {
+                transform: rotateX(0deg) scale(1) ;
+            }
+            60% {
+                transform: rotateX(-20deg) scale(1);
+            }
+            100% {
+                transform: rotateX(0deg) scale(1);
+            }
+        }
+
+        @keyframes img-rotate-reverse {
+            0% {
+                transform: rotateX(00deg) scale(1);
+            }
+            40% {
+                transform: rotateX(-20deg)  scale(1);
+            }
+            60% {
+                transform: rotateX(0deg) scale(1);
+            }
+            100% {
+                transform: rotateX(90deg) scale(1);
+            }
+        }
+
+        /************************text animation***********************************************/
+       
+       .left-block h2 , .right-block h2 {
+                   opacity: 0;
+                   font-size: 40px;
+                   font-family: cursive;
+       }
+       
+      
+        .left-block-animate {
+            animation: fadeIn 2s ease-out ;
+        }
+
+        .right-block-animate {
+            animation: fadeIn 2s ease-out 1.5s;
+        }
+
+
+
+        @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      50% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      100%{
+        opacity: 0;
+        transform: translateY(10px);
+      }
+    }
+    </style>
+</head>
+<body>
+    <div class="img-holder" >
+    
+        <div class="left-block" >
+        <h2 id="left-block1">YOU PLACE ORDER</h2>
+    </div>
+
+    <div class="middle-block">
+        
+            <img id="img" src="images/daileneeds/place order.png" alt="">
+            <img id="img2" src="images/daileneeds/order pickup.png" alt="">
+
+        
+    </div>
+
+    <div class="right-block" >
+        
+        <h2 id="right-block1">WE TAKE IT</h2>
+    </div>
+     </div>
+    </div>
+    <script>
+        function play1() {
+        var imgBlock = document.getElementById('img');
+        var imgBlock2 = document.getElementById('img2');
+        var leftBlock = document.getElementById('left-block1');
+        var rightBlock = document.getElementById('right-block1');
+        
+        imgBlock.classList.add('img-do');
+        imgBlock2.classList.add('img2-do');
+        leftBlock.classList.add('left-block-animate');
+        rightBlock.classList.add('right-block-animate');
+    }
+
+
+
+    play1()
+    </script>
+   
+</body>
+</html>
