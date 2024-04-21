@@ -1,13 +1,5 @@
-https://meet.google.com/vbu-hvmp-uos?hs=224
-Company - 1 , PUGA
-Products
-1. 5 LTRS SHALLI LIQUID (Biostimulants) - Price 21Rs/piece
-2. 5 LTRS STEP UP HUMEIC ACID - 21Rs/piece
-3.  1 LTR SHALLI LIQUID (Biostimulants) - 8.5Rs/piece
-4. 1 LTRS STEP UP HUMEIC ACID - 8.5Rs/piece
-5.  1/2 LTRS SHALLI LIQUID (Biostimulants) - 6.5Rs/piece
-6. 1/2 LTRS STEP UP HUMEIC ACID - 6.5Rs/piece
-7. 1 LTRS ZYMEX-PLUS LIQUID (Biostimulants) - 8.5Rs/piece
-8. 1/2 LTRS ZYMEX-PLUS LIQUID (Biostimulants) - 6.5Rs/piece
-9. 1 LTRS PUGA VISTARA - 8.5Rs/piece
-10. 1/2 LTRS PUGA VISTARA - 6.5Rs/piece
+Drawing parallels between the Infinity Stones and DevOps tools offers a unique perspective on the dynamic world of software development and infrastructure management. 
+
+Just as each stone grants immense power in the Marvel universe , similarly SHELL SCRIPTING , GIT , JENKINS , DOCKER , KUBERNETES , ANSIBLE , TERRAFORM also provide enormous amount of power to devops engineers.
+
+As a DevOps enthusiast, I find inspiration in the synergy between these realms, seeking to wield their power to forge efficient, balanced solutions in the digital universe.
