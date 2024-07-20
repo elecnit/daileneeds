@@ -1,0 +1,986 @@
+> ansible written in python.    
+> playbook is written in YAML.
+> required python to use Ansible.
+> ansible galaxcy
+> ---                                                   // indicates that it is ansible syntax.
+> #                                                     // For comment. 
+> Extra Packages for Enterprise Linux (EPEL)            // to install ansible.
+> Ansible connection options 
+    > network_cli , NETCONF , HttpApi , Local , SSh.
+> Ansible components
+    > Modules , pulgins and Roles .
+
+> ansible.cfg                                           //  INI formate is the standard one , YAML will not be useded.
+> hosts                                                 // YAML (if more complexcity is there) or INI formate (less complexcity).
+> playbook                                              // YAML 
+
+> Module 
+   > This is the chunk of code execute on the remote server. (yum , apt , file , ping)
+> plugin 
+   > This increases the power of ansible , filter , collection , action and lookup . 
+> playbook 
+   > This is the structured way of to execute list of tasks , in which we can use loop , conditional statments.
+> roles 
+   > This may be collection playbooks , varibles , files.
+   > reusable for specfic task.
+
+
+> Fleet Management 
+
+> Red hat Ansible tower (to manage using GUI, not free)
+> AWX (same for free)
+
+> Goals of ansible 
+
+    > clear , fast , complete , efficient and secure.
+
+
+> Asible Roles 
+   
+    > Reusble of code , configuration. 
+    > 
+
+
+> Asible pulg-ins 
+    
+    > Increases the capabalities of ansible.
+
+> Ansible Control node 
+    
+    > where ansible is installed and manage the remote node (manaage nodes).
+    > cd etc/ansible 
+       >> ls , ansible.cfg hosts [list of devices we control] roles[indredients]
+
+
+> Hosts and Variable in ansible. 
+  > variables can be used in inventory and as well as in playbook.
+  > ex: 
+      [southeast]
+      localhost            ansible_connection=local 
+      other1.example.com   ansible_connection=ssh      ansibleuser=ubuntuu
+
+      [northeast]
+      00.10.34.100 
+
+      [southwest]
+      other2.example.com
+
+      [east:children]
+      southeast
+      northeast
+ 
+ 
+ > Playbooks in Ansible  
+
+    > first.yml 
+       > --- 
+           - name:  "my first play"
+             host: localhost
+
+             tasks:
+
+             - name: "test reach" 
+               ping: 
+             
+             - name: "install model"
+               homebrew: 
+                   name: stress
+                   state: present
+
+> Connecting to the remote sever.
+    > copy the pub key from local server and paste it in the "authorized keys" of remote server.
+
+
+> Orchestretion in ansible  
+
+  > --- 
+     > - name: "Orchestretion Example"
+         hosts:   logicservers
+         serial: 1
+
+         tasks: 
+            
+            - name: "Shutdown server"
+              debug: 
+                msg: "Shutdown {{inventory_hostname}}"
+
+            - name: "Upgrade firmware"
+              debug: 
+                msg: "Upgrade {{inventory_hostname}}"
+            
+            - name: "Start server"
+              debug: 
+                msg: "Start {{inventory_hostname}}"
+
+            - name: "Verify server"
+              debug: 
+                msg: "Verify {{inventory_hostname}}"
+  myhosts: 
+     
+      [logicservers]
+      server1 ansible_host=127.0.0.1 ansible-connection=local   deprecation-worning=false , INTERPRETER_PYTHON=auto_silent
+
+> Ansible for Configuration Management.
+   > Dessigned to minimal in nature , Agentless , SSh , State driven , Idempotent.
+
+   > --- 
+       - hosts: all 
+         become: yes                                                                    // Giving root user privilegies.  
+         name: "NTP configuration"
+
+         tasks: 
+
+              -name: "Ensure NTP  is installed"
+               apt:   
+                  name: 
+                    - ntp 
+                    state: present
+                - name: "Ensure NTP is started now and at boot"
+                  service:
+                    name: ntp
+                    state: started
+                    enabled: yes  
+
+> React to configuration changes with ansible 
+  > --- 
+     - name: "React to the change"
+       host: webserver
+       serial: 1 ( one server at a time )   / strategy: free (finish the tasks as soon as possible)
+
+       tasks:
+
+         - name: "Install nginx"
+           debug: 
+             msg: "Install nginx in {{ inventory_hostname }}" 
+
+         - name: "Upgrade nginx"
+           debug: 
+             msg: "Upgrade nginx in {{ inventory_hostname }}" 
+         
+         - name: "Configure nginx"
+           debug: 
+             msg: "Configure nginx in {{ inventory_hostname }}" 
+           notify: restart nginx 
+           changed_when: True 
+
+         - name: "Verify nginx"
+           debug: 
+             msg: "Verify nginx in {{ inventory_hostname }}" 
+       
+         handlers: 
+          
+          - name: restart nginx 
+            debug: 
+              msg: "restsrt the {{ inventory_hostname }}"
+
+> COLLECTION PARAMETER 
+
+  > From which Ansible should load modules and plugins for a playbook or role.
+  > It can be used in cfg file or in playbook.
+     > IN cfg file 
+         ex: [collections]
+             collections_paths = /path/to/first/collection:/path/to/second/collection
+     > In playbook 
+         ex: collections:
+               - ansible.builtin
+               - community.general
+
+> VALID VARIABLE IN ANSIBLE 
+  > Not python and ansible keywords. 
+  > cann't begin with number. 
+  
+  > var=/opt/etc    (define)   , {{var}} (reference) 
+
+
+> YAML SYNTAX 
+
+  > - name                                                    // list   
+    - job 
+  > po:                                                       // dictionary
+      a: 1
+      b: 2
+  >   c: |
+         apple
+         bat
+         cat 
+  > region:
+       - northeast
+       - southeast
+       - midwest
+
+       region: "{{ region[0] }}"                              // northeast
+  > foo:
+     field1: one
+     field2: two
+
+    foo['field1']                                              // output= one 
+    foo.field1       
+
+# CONFIGURE FILE 
+
+ > These are the place where cfg file will be seached. 
+   > ANSIBLE_CONFIG (environment variable if set)
+   > ansible.cfg (in the current directory)
+   > ~/.ansible.cfg (in the home directory)
+   > /etc/ansible/ansible.cfg
+
+ > To create the cfg file using following command 
+   > $ ansible-config init --disabled > ansible.cfg
+
+
+# HOW TO WRITE YML FILE FOR ANSIBLE 
+> 
+
+
+
+# HOW TO WRITE INVENTORY 
+
+> default location of inventory: /etc/ansible/hosts
+> custome path using " -i ".
+> Or in the cfg using " inventory=path "
+> group name should follow the variable guideline.
+
+
+> type of inventory define 
+  > static 
+       > We can store the many inventory file in single folder.
+       > As ansible uses ASCII to manage the  inventory load  , add prefix 01 , 02 to the files.
+  > dynamic
+
+> Define the variable for host and group 
+       > [west]
+         host1 http_port=80 maxRequestsPerChild=808
+         host2 http_port=303 maxRequestsPerChild=909
+
+> Inventory defoined in YAML file 
+
+  > ex: 
+     ungrouped:
+      hosts:
+         mail.example.com:
+    webservers:
+        hosts:
+          foo.example.com:
+          bar.example.com:
+    dbservers:
+      hosts:
+        one.example.com:
+        two.example.com:
+        three.example.com:
+
+> Default groups
+     > all                                                    // contains every host.
+     > ungrouped                                              // host that only present in all.
+
+> A single host may be present in multiple groups.
+
+> grouping the group 
+  ex: 
+     > in Inventory file  
+      [prod:chlidren]
+       hostname1 
+       hostname2
+     > In yml file 
+       east:
+          hosts:
+            foo.example.com:
+            one.example.com:
+            two.example.com:
+       prod:
+          children:
+            east:
+
+>  Mentioning the range while defining hosts 
+  > ex: 
+     > [apple]
+        http:apple[01:30]store.com              // range from 00 to 30 
+  > ex: 
+     > [boat]
+        http:boat[01:30:2]store.com             // inrecments steps  
+
+> You can mention two or many inventories at a time . 
+     > ansible-playbook get_logs.yml -i staging -i production
+
+> make use of non-stardard ssh port .
+     > hostname:4054
+
+> Inventry aliases 
+     > ex: 
+          >   jumper ansible_port=5555 ansible_host=192.0.2.50
+          >   jumper:
+                  ansible_port=5555
+                  ansible_host=192.0.2.50
+
+> Definfing the variables
+  > if we define the variables for gourp of groups then it will available for children hosts also. 
+     > ex: 
+         > [atlanta]
+              host1
+              host2
+
+              [atlanta:vars]
+              ntp_server=ntp.atlanta.example.com
+              proxy=proxy.atlanta.example.com
+            [outland]
+                host3
+            [south:children]
+              atlanta
+              outland 
+            [south:vars]
+               a=5
+               b=7
+        > atlanta:
+            hosts:
+              host1:
+              host2:
+            vars:
+              ntp_server: ntp.atlanta.example.coms
+              proxy: proxy.atlanta.example.com
+
+> If the Inventory file is placed in path " /etc/ansible/hosts "
+   > This can use list and hash type to store data but must use YAML.
+   > you can place the variables of hosts and groups in file that ansible look from "/etc/ansible/group_vars/group_name" and "/etc/ansible/host_vars/host_name" 
+   > You can the vars in many files ansible look for all the files "/etc/ansible/group_vars/group_name/setting_cfg" , "/etc/ansible/group_vars/group_name/log_vars"
+
+> Merging of variables 
+   > Order all groups --> parent group --> child group --> hosts 
+   > In same level using ASCII 
+   > you change the priorirty using  ansible_group_priority: higher the number higher the priority.
+
+> Host Connection 
+
+> Tags in ansible 
+> Running the on local host. 
+> To run the powerfully in local host , hosts: localhost with connection: local 
+
+> RETURN TYPES FROM ANSIBLE TASKS 
+    > backup_file , changed , diff , failed , invocation , msg , rc , results , skipped , stderr , stderr_lines , stdout , stdout_lines.
+
+> ansible-playbook Example.yml -v                             // To run the ansible playbook and -v for detailed.
+> ansible myservers[list of inventory] -m ping                // To run the ad hoc cmd in inventory.
+> ansible localhost -m ping                                   // To check the localhost is available or not.
+> ansible localhost -m find -a "path=Downloads file_type=file"  //
+> ansible.cfg                                                  // for nice output ansible use ymal module , put cfg file with playbook 
+  > stdout_callback = yaml                                     // Use Yaml pulgin
+  > bin_ansible_callbacks = True                               // use stdout_callback while running ad-hoc command.
+> ansible-playbook Example.yml -f 20 -i myhosts                // When strategy is used to mention the forks (remote systems ) , -i for customized host file 
+> ansible-playbook -i inventory_test -l appservers site.yml    // -l limit to which the playbook apply.
+> ansible-playbook tags.yml --tags ntp                         // To run the service based on tags.
+> ansible-playbook tags.yml --list-tags                        // Gives the list of tags we have.
+> ansible-playbook tags.yml --skip-tags TAG_NAME               // To skip the one of the tags. 
+> ansible-playbook tags.yml --start-at-task "Name of the service" //To start the task from specific task by skiping previous one.
+> ansible-playbook tags.yml --step                             // To start playing in interactive mode ask at  each task. 
+> ansible-playbook tags.yml -e State=start                     // To mention the env var in command line. 
+> ansible-playbook example.yml --check                         // To check the syntax , working errors.
+> ansible-galaxcy init role_name                               // To create roles in that current location.
+> ansible-galaxcy install role_name                           // To install roles from  ansible_galaxcy.
+>  ansible-galaxcy install role_name /p /path/to/install/role  // To specify the path.
+> ansible-vault create *.yml                                   // To create the encrypted yml file.
+> ansible-playbook examlple.yml --ask-vault-pass               // This will ask for password that genareted while that file created and runs it.
+> ansible-vault encrypt *.yml                                  // To encryt the exsisting file.
+> ansible-vault edit *.yml                                     // To edit the encrypted file.
+> ansible-vault encrypt_string --vault_id @prompt <string>     // To encrypt the string.
+                                          @file_where_key_pre  // To speify using the file. 
+                                          @cmd()               // command output should be passkey.
+
+> Dynamic inventory 
+
+ > using api and script we can take current inventories . 
+
+> Templates 
+  > popular templating language is jinja2 for python developer.
+  
+  > Condetional Execution 
+     
+     > using WHEN condition to execute 
+       > ex: - name: Upgrade 
+               when: ansible_os == "Redhat"
+               yum: name=* state=latest
+  > Loop condition 
+
+     > using with_items to itterate through the list 
+       > method 1
+         > tasks: 
+                - name: "do"
+                  apt: 
+                     name: "{{item}}"
+                     state: latest 
+                  with_items: "{{ packages }}"
+       > method 2
+          > tasks: 
+                - name: "do"
+                  apt: 
+                     name: "{{ packages }}"
+                     state: latest 
+
+     > using with_dict to iterrate through dictionary.
+         > wesites: 
+                user_id: 
+
+> ROLES 
+  > default location ansible looks at "etc/ansible/roles"
+  > file structure 
+    > roles/ 
+          common/
+          tasks/
+          handlers/
+          library/
+          files/
+          templates/
+          vars/
+          defaults/
+          meta/
+  > the variables in defaults/ folder will be overwrited by vars/ variables and that by command line -e var. 
+  > - name: "test var"
+      become: yes 
+      roles:
+         testroles1
+  > ansible galaxcy to get roles , we can filter.
+
+> SECRECTS 
+  
+    > It is used to protect the credentails.
+    > It is done by using "ansible-vault" and 
+
+> IDEMPOTENCE 
+   
+    > It means that can make same changes to the remote env repeatedly but it should affect by that it is changes previously.
+
+> MODULES 
+
+
+ > ping    
+    > This module used to just check the connectivity and control node can run ansible module on manage node or not. 
+ 
+ > include ------------------------------------------------------------------------------------
+
+    > This is module is used to organize , structured way to write roles , play , tasks.
+    > This will add the roles , play and task at there level and read that files. 
+    _________________________________________________________________________________________________________________________________________
+    > - hosts: localhost
+  tasks:
+    - debug:
+        msg: play1
+
+- name: Include a play after another play
+  include: otherplays.yaml
+
+- hosts: all
+  tasks:
+    - debug:
+        msg: task1
+
+    - name: Include task list in play
+      include: stuff.yaml
+
+    - debug:
+        msg: task10
+
+- hosts: all
+  tasks:
+    - debug:
+        msg: task1
+
+    - name: Include task list in play only if the condition is true
+      include: "{{ hostvar }}.yaml"
+      static: no
+      when: hostvar is defined
+
+        
+ > debug ------------------------------------------------------------------------------------
+  
+   > This module is used to print the simple msg and var values. 
+   > Can use verbocity to print the msg only when verbosity is -v or high.
+   > with_items or when can be used. 
+   _________________________________________________________________________________________________________________________________________
+   > ---
+- name: Example playbook using debug module
+  hosts: localhost
+  vars:
+    my_variable: "Hello, World!"
+    my_complex_variable:
+      name: "John Doe"
+      age: 30
+      skills:
+        - "Python"
+        - "Ansible"
+        - "Docker"
+    my_list:
+      - "item1"
+      - "item2"
+      - "item3"
+    my_condition: true
+
+  tasks:
+    - name: Print a simple message
+      debug:
+        msg: "This is a simple debug message"
+
+    - name: Display a variable
+      debug:
+        var: my_variable
+
+    - name: Display complex data structure
+      debug:
+        var: my_complex_variable
+
+    - name: Print a message with verbosity level
+      debug:
+        msg: "This message is only shown with -v or higher"
+        verbosity: 1
+
+    - name: Print each item in a list
+      debug:
+        msg: "{{ item }}"
+      with_items: "{{ my_list }}"
+
+    - name: Conditionally print a message
+      debug:
+        msg: "This will only be printed if condition is true"
+      when: my_condition
+--------------------------------------------------------------------------------------------------------------------------------------------
+> set_fact  
+    
+    > This module is used to store the dynamic value (called facts) of tasks like calculation and condition.
+    > available all over playbook and can be override by other set_fact.
+
+   _________________________________________________________________________________________________________________________________________
+    > ---
+- name: Example playbook using set_fact module
+  hosts: localhost
+  vars:
+    initial_variable: 10
+    my_condition: true
+
+  tasks:
+    - name: Set a simple fact
+      set_fact:
+        simple_fact: "Hello, World!"
+
+    - name: Display the simple fact
+      debug:
+        var: simple_fact
+
+    - name: Set a fact based on a variable
+      set_fact:
+        calculated_fact: "{{ initial_variable * 2 }}"
+
+    - name: Display the calculated fact
+      debug:
+        var: calculated_fact
+
+    - name: Set a complex fact
+      set_fact:
+        complex_fact:
+          name: "Jane Doe"
+          age: 25
+          skills:
+            - "Java"
+            - "Terraform"
+            - "Kubernetes"
+
+    - name: Display the complex fact
+      debug:
+        var: complex_fact
+
+    - name: Conditionally set a fact
+      set_fact:
+        conditional_fact: "Condition is true"
+      when: my_condition
+
+    - name: Display the conditional fact
+      debug:
+        var: conditional_fact
+
+    - name: Conditionally set another fact
+      set_fact:
+        another_conditional_fact: "Condition is false"
+      when: not my_condition
+
+    - name: Display another conditional fact
+      debug:
+        var: another_conditional_fact
+      ignore_errors: yes  # To avoid playbook failure if the variable is not set
+  > - name: Get the current date
+  command: date +"%Y-%m-%d"
+  register: current_date
+
+- name: Set fact using registered variable
+  set_fact:
+    today_date: "{{ current_date.stdout }}"
+> - name: Create multiple facts in a loop
+  set_fact:
+    "item_{{ item }}": "{{ item }}"
+  with_items:
+    - 1
+    - 2
+    - 3
+
+- name: Display looped facts
+  debug:
+    var: item_1
+  debug:
+    var: item_2
+  debug:
+    var: item_3
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+> service 
+
+ > This module used to start , stop , restart , reload , enabled and disabled the services on remote nodes. 
+ > this uses the system services management such a systemd , upstart and Sysvinit.
+ _________________________________________________________________________________________________________________________________________
+ > ---
+- name: Example playbook using service module
+  hosts: all
+  become: yes  # Ensure the playbook runs with elevated privileges
+  tasks:
+    - name: Ensure the Apache service is started and enabled at boot
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+
+    - name: Restart the Apache service
+      service:
+        name: apache2
+        state: restarted
+
+    - name: Reload the Apache service configuration
+      service:
+        name: apache2
+        state: reloaded
+
+    - name: Ensure the MySQL service is stopped
+      service:
+        name: mysql
+        state: stopped
+
+    - name: Ensure the MySQL service is disabled at boot
+      service:
+        name: mysql
+        enabled: no
+ ----------------------------------------------------------------------------------------------------------------------------------
+ > command
+    
+    > This module used to run simple command on remote host  , it doesn't process the commands throught shell so can't use variables , redirection.
+    > diffrent from shell module
+    __________________________________________________________________________________________________________________________________________
+    > ---
+- name: Example playbook using command module
+  hosts: localhost
+  tasks:
+    - name: Run a simple command
+      command: whoami
+
+    - name: Run a command with arguments
+      command: /usr/bin/ls -l /tmp
+
+    - name: List files in a specific directory
+      command: /usr/bin/ls -l
+      args:
+        chdir: /var
+
+    - name: Create a file only if it does not exist
+      command: /usr/bin/touch /tmp/unique_file
+      args:
+        creates: /tmp/unique_file
+
+    - name: Remove a file if it exists
+      command: /bin/rm /tmp/unwanted_file
+      args:
+        removes: /tmp/unwanted_file
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+> shell 
+ 
+  > this module uses shell specific features like variable expansion , redirection , command chaining and pinging.
+  > executable: Specify a different shell to use for execution (e.g., /bin/bash, /bin/sh).
+  > warn: Whether to warn if the command appears non-idempotent. Defaults to yes.
+  > stdin: Standard input to pass to the command.
+  > stdin_add_newline: Whether to append a newline to the stdin data. Defaults to yes.
+ _________________________________________________________________________________________________________________________________________
+  > ---
+- name: Example playbook using shell module
+  hosts: localhost
+  tasks:
+    - name: Run a simple shell command
+      shell: echo "Hello, World!"
+
+    - name: Use environment variables and piping
+      shell: export VAR="Hello"; echo $VAR | grep "Hello"
+
+    - name: List files in a specific directory
+      shell: ls -l
+      args:
+        chdir: /tmp
+
+    - name: Create a file only if it does not exist
+      shell: touch /tmp/unique_file
+      args:
+        creates: /tmp/unique_file
+
+    - name: Remove a file if it exists
+      shell: rm /tmp/unwanted_file
+      args:
+        removes: /tmp/unwanted_file
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+> template 
+  
+  > This is used to depoly the config , templated and other simple text file to remote node. 
+  > To create dynamic configuration files based on variable values.
+  > Whatever the cariables accessed by the playbook can be accessed by this config files.
+
+  <parameter>
+  > src (required): The source template file on the Ansible control machine.
+  > dest (required): The destination path on the remote host where the generated file will be placed.
+  > backup: Whether to create a backup of the original file if it is being overwritten. Accepts yes or no.
+  > force: Whether to overwrite the file if the content is different. Defaults to yes.
+  > mode: The permissions the resulting file should have.
+  > owner: The owner of the resulting file.
+  > group: The group of the resulting file.
+  > validate: A command to validate the file before moving it into place.
+  > selevel, serole, setype, seuser: SELinux attributes.
+_________________________________________________________________________________________________________________________________________
+  > ---
+- name: Example playbook using template module
+  hosts: webservers
+  vars:
+    server_name: www.example.com
+    document_root: /var/www/html
+  tasks:
+    - name: Deploy Apache configuration from template
+      template:
+        src: templates/apache.conf.j2
+        dest: /etc/httpd/conf/httpd.conf
+        mode: '0644'
+        owner: root
+        group: root
+        backup: yes
+        validate: '/usr/sbin/apachectl configtest'
+   > <VirtualHost *:80>
+    ServerName {{ server_name }}
+    DocumentRoot {{ document_root }}
+    <Directory "{{ document_root }}">
+        AllowOverride All
+        Require all granted
+    </Directory>
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+------------------------------------------------------------------------------------------------------------------------------------------
+> copy 
+   
+   > Just copy the file from src to dest in secured manner. 
+   _________________________________________________________________________________________________________________________________________
+   > ---
+- name: Example playbook using copy module
+  hosts: webservers
+  vars:
+    content_message: "Welcome to the server!"
+  tasks:
+    - name: Copy a configuration file
+      copy:
+        src: /local/path/config.conf
+        dest: /etc/myapp/config.conf
+        mode: '0644'
+        owner: myuser
+        group: mygroup
+
+    - name: Create a welcome file with content
+      copy:
+        content: "{{ content_message }}"
+        dest: /var/www/html/index.html
+
+    - name: Backup and copy a script
+      copy:
+        src: /local/path/myscript.sh
+        dest: /usr/local/bin/myscript.sh
+        mode: '0755'
+        backup: yes
+---------------------------------------------------------------------------------------------------------------------------------------------
+> yum 
+ 
+  > This module is  used to download , remove , update and manage the packages in remote nodes.
+  > <Parameter>
+  > name: The name of the package to be managed. You can specify a single package, multiple packages (as a list), or a package with a specific version.
+  > state: The desired state of the package. The possible values are:
+              > present or installed: Ensures the package is installed.
+              > absent or removed: Ensures the package is removed.
+              > latest: Ensures the package is installed and is the latest version.
+              > reinstalled: Reinstalls the package.
+  > update_cache: Whether to update the package database before installing. Can be yes or no.
+  > disable_gpg_check: Whether to disable GPG signature checking. Can be yes or no , GNU privacy gaurd to verify the packages.
+  > enablerepo: Specifies which repositories to enable for the task.
+  > disablerepo: Specifies which repositories to disable for the task.
+  > conf_file: Path to an alternate yum.conf file.
+  > installroot: Specifies an alternative installation root.
+  > allow_downgrade: Whether to allow downgrading a package. Can be yes or no.
+  > 
+_________________________________________________________________________________________________________________________________________
+  > ---
+- name: Manage packages with yum module
+  hosts: webservers
+  tasks:
+    - name: Ensure httpd is installed
+      yum:
+        name: httpd
+        state: present
+
+    - name: Ensure mariadb-server is installed
+      yum:
+        name: mariadb-server
+        state: present
+
+    - name: Ensure a specific version of nginx is installed
+      yum:
+        name: nginx-1.18.0
+        state: present
+
+    - name: Ensure php is removed
+      yum:
+        name: php
+        state: absent
+
+    - name: Ensure all packages are up-to-date
+      yum:
+        name: '*'
+        state: latest
+
+    - name: Update the package cache
+      yum:
+        update_cache: yes
+
+    - name: Install custompackage from customrepo
+      yum:
+        name: custompackage
+        enablerepo: customrepo
+--------------------------------------------------------------------------------------------------------------------------------------------------
+> lineinfile 
+
+   > This module is used to insert , delete and modify the line in config or simple txt file in remote. 
+   >  path or dest: The path to the file that will be modified.
+   > line: The line to be inserted or modified in the file.
+   > state: Whether the line should be present (default) or absent.
+   > regexp: A regular expression to identify the line in the file that should be replaced or deleted.
+   > insertafter: A regular expression or special value to specify where to insert the new line relative to a pattern or position.
+   > insertbefore: A regular expression or special value to specify where to insert the new line relative to a pattern or position.
+   > create: Whether to create the file if it does not exist. Can be yes or no.
+   > backrefs: Whether to use backreferences in the regexp. Can be yes or no. means to reuse the matched part using ( ) to grp the pattern.
+   > validate: The validation command to be run before changing the file.
+   _________________________________________________________________________________________________________________________________________
+   > ---
+- name: Manage configuration file
+  hosts: all
+  tasks:
+    - name: Ensure a configuration line is present
+      lineinfile:
+        path: /etc/myconfig.conf
+        line: "my_setting=true"
+        create: yes
+
+    - name: Ensure a specific setting is commented out
+      lineinfile:
+        path: /etc/myconfig.conf
+        regexp: '^my_setting='
+        line: '# my_setting=true'
+
+    - name: Ensure a new setting is added after the existing one
+      lineinfile:
+        path: /etc/myconfig.conf
+        line: "new_setting=yes"
+        insertafter: '^my_setting='
+
+    - name: Ensure another setting is added before the end of file comment
+      lineinfile:
+        path: /etc/myconfig.conf
+        line: "another_setting=no"
+        insertbefore: '^# End of file'
+
+    - name: Remove an unnecessary setting
+      lineinfile:
+        path: /etc/myconfig.conf
+        line: "unnecessary_setting"
+        state: absent
+------------------------------------------------------------------------------------------------------------------------------------------
+
+> uri 
+  
+   > This module is used to make HTTP requests (GET , POST , PUT , DELETE) to remote nodes.
+   > url: The URL to which the request is sent. This parameter is required.
+   > method: The HTTP method to use for the request. Possible values include GET, POST, PUT, DELETE, HEAD, OPTIONS, and PATCH. Default is GET.
+   > body: The body of the request, used for methods like POST and PUT. This can be a string or a dictionary that will be converted to JSON.
+   > body_format: The format of the body if it is a dictionary. Possible values are raw, json, or form-urlencoded. Default is raw.
+   > headers: A dictionary of headers to include in the request.                                                  // Header is additional information in form of dictionary.
+             > Content-Type: Specifies the media type of the resource or the data being sent.
+             > Authorization: Contains credentials for authenticating the client to the server.
+             > User-Agent: Provides information about the client software initiating the request.
+             > Accept: Indicates the media types that the client is willing to receive from the server.
+             > Custom Headers: Many APIs and services use custom headers for passing additional data or performing special actions.
+   > status_code: A list of acceptable status codes. If the response code is not in this list, the task will fail.
+   > return_content: Whether to return the content of the response. Default is no.
+   > timeout: The amount of time, in seconds, to wait for a response before timing out. Default is 30 seconds.
+   > force_basic_auth: Whether to force basic authentication for the request. Default is no.
+   > user and password: The username and password for basic authentication.
+   > src: A local file path to send as the body of the request (useful for file uploads).
+   > validate_certs: Whether to validate SSL certificates. Default is yes.
+  _________________________________________________________________________________________________________________________________________
+   > ---
+- name: Interact with a web service
+  hosts: localhost
+  tasks:
+    - name: Get data from the API
+      uri:
+        url: https://api.example.com/data
+        method: GET
+        return_content: yes
+      register: get_result
+
+    - debug:
+        msg: "GET Response: {{ get_result.content }}"
+
+    - name: Create a new resource via POST
+      uri:
+        url: https://api.example.com/data
+        method: POST
+        body: '{"name": "new_item", "value": "42"}'
+        headers:
+          Content-Type: application/json
+        status_code: 201
+        return_content: yes
+      register: post_result
+
+    - debug:
+        msg: "POST Response: {{ post_result.json }}"
+
+    - name: Update the resource via PUT
+      uri:
+        url: https://api.example.com/data/1
+        method: PUT
+        body: '{"name": "updated_item", "value": "84"}'
+        headers:
+          Content-Type: application/json
+        status_code: 200
+        return_content: yes
+      register: put_result
+
+    - debug:
+        msg: "PUT Response: {{ put_result.json }}"
+
+    - name: Delete the resource via DELETE
+      uri:
+        url: https://api.example.com/data/1
+        method: DELETE
+        status_code: 204
+      register: delete_result
+
+    - debug:
+        msg: "DELETE Response code: {{ delete_result.status }}"
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+> ping , include , debug , set fact , service , shell / cmd , template / copy , yum , lineinfile , uri 
+
+

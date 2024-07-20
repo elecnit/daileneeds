@@ -1,0 +1,526 @@
+Jenkins written in Java.
+FOTA   :farmware over the air.
+Terminologies 
+
+> Jobs and project                     :to refer the list of task that jenkins do for us.
+> Build                                :one run of the job.
+> Build Steps                          :task inside project.
+> Build trigger                        :point from where build starts. manually or automatically.
+> pulgins                              :software programs used to add new features.
+
+
+
+> to deliver the model to market we use waterfall and agile.
+
+> plan                                 : according to client 
+> code                                 : developer use git , github
+> build                                : gradle, maven
+> testing                              : selinium , junits
+> intergrate                           : jenkins
+> deploy                               : xebailabs
+> operate                              : chef ,ansible
+> monitering 
+
+
+
+PREREQUIRESTS
+
+> JAVA JDK
+> 
+
+
+
+>CI server 
+
+   >> Bamboo
+   >> Builbot
+   >> gump
+   
+> JENKINS PIPELINE 
+
+   > code commit ---> build(maven) ---> test(selenium) ---> release ---> deploy ---> production
+
+> JENKINS ARCITECTURE 
+   
+   > both maven and selenium runs in jenkins environment.
+
+> Tour of jenkins 
+
+   > Manage Jenkins ----> configure system --> Home path , smtp Email , no of executors. 
+   > Global Tool Configuration ------> LDAP authorized server , java git installation.
+
+
+> Jobs or projects 
+
+   > genral 
+         >> discription               : give explain of project for better understanding.
+   > source code managment  
+         >> to give url of source code and credential.
+   > build trigger 
+   > build environment 
+   > build steps 
+         >> what should run. like bash command.
+   > post-build action
+
+Info 
+
+> after build go to history and console output.
+
+DISTRIBUTED 
+
+> master slave 
+    > to make slave in the other drive like D , E and where jenkins is stored is called master.
+    > got mange jenkins ---> manage node ---> create new node
+    > download the agent.jar file and paste in the drive and in cmd run the cmd taken from jenkins when we created new node.
+    > and agent will be up.
+    > to run the jobs on agent in general check the 'restrict where job can run' and select the agent.
+
+BACKUP 
+   
+    > to take the backup of jenkins first to install backup pulgins and run it.
+    > to get back the backup restore the should clicked.
+
+PIPELINES
+
+
+AUTOMATION CAN DONE IN THREE TYPES 
+
+  > Origanizatoion folder 
+  > multibranch pipelines 
+  > pipeline 
+
+
+  > MUILTIBRANCH PIPELINE
+    
+    > make github app with repository permissions , and install for required repositories. 
+    > create access key and create multipipeline project.
+    > now even new branch is made and and pull  and it out will show in jenkins.
+    > github changes and job created. 
+
+PIPELINE *********************************************************************************************************
+  
+   > it helps in CD 
+   > we can define pipeline using UI or jenkinsfile and make it available in source code.
+   > it can be declared by two types 
+             >> declarative 
+             >> scripted
+   -------------------------------------------------------------------------------------------------------------
+   > pipeline {
+       
+       agent any || agent {  label 'agent_name' }
+
+       stages {  
+              
+              stage ('stageName') {
+                   
+                   steps {
+                       sh 'echo hello'
+                   }
+              }
+
+
+       }
+
+   }
+   --------------------------------------------------------------------------------------------------------------
+ TYPE OF TAGES 
+
+ > tools 
+ > options 
+ > trigger 
+ > stages 
+ > post
+  
+
+ SNIPPET GENRATOR 
+    
+    > we can genrate the code using snippet genrator. 
+    > snippet syntax ----> topic(drag drop) ------> genrate script    
+
+PIPELINE VARIABLES
+     
+    > variables should be capital , it can declare globally or locally.
+    > pipeline syntax ----> Global varibal referrence .
+    
+> Environments
+    > if variables declared outside the stages tag then it is global and in stages then locally.
+    > variables decalred in environment tag . eg    environment {  MAX_VALUE = 10 }.
+> Parameters
+    > name , default and dicription.
+    > Parameter types 
+           >> String 
+           >> text 
+           >> boolean 
+           >> password 
+           >> choice 
+> Currentbuild
+
+CONDITIONAL EXPRESSION 
+
+     >  type of condition ----> branch , environment , expression.
+
+  > Branch 
+
+    > stage('Deploy to Production') {
+            when {
+                branch 'main'
+            }
+            steps {
+                echo 'Deploying to the main branch (production).'
+            }
+        }
+
+    > Environment 
+      
+      > stage('Database Deployment') {
+            when {
+                environment name: 'DEPLOY_TO_PROD', value: 'true'
+            }
+            steps {
+                echo 'Deploying to production database.'
+            }
+}
+
+
+
+  > Expression
+
+     > pipeline {
+          agent any 
+          stages {
+             stage {
+                when {}
+                  }
+                }
+               }
+     > ex :   stages {
+                 stage{
+                    when { 
+                        expression { param.ENVINORMENT == 'devops' }}
+                    input meassage: 'confrim continue' ok: 'deploy'
+                 }
+     } 
+
+MAKE PIPELINE SCRIPT AVAILABEL IN SCM AND MAKE WHENEVER THE CODE IS PUSHED TO GITHUB
+
+> In pipeline select "script from scm" , select "git"  , give credentail . 
+> to make build trigger when code is pushed or edited  to the github.
+     >> "GitHub hook trigger for GITScm polling"  select this in build trigger. 
+     >> select "script from scm" , select git , give credentail. 
+     >> path of file in github , file name should be "jenkinsfile".
+     >> copy the link by right click in logo (pipeline). 
+     >> In github ---> settings ---> webhooks , "payload url" url of jenikins pipeline.
+     >> at the end of the url "/github-webhook/". 
+     >> and select "just the push event".
+
+
+TO RUN THE EXTERNAL COMMAND 
+
+> sh()
+> bat()
+> dir("${env.WORKSPACE}/environment/test"){
+    sh('''
+    commands lines.
+    '''')
+}
+> sh("./scripts/fileName.sh ${env.num}")
+> sh(${WORKSPACE}/scripts/fileName.sh ${env.num})
+> dir("${env.WORKSPACE}/scripts") {
+        sh("./fileName.sh ${env.num}")
+}
+
+FOR STATUS BADGE , ONE MORE WAY TO CONNECT TO THE GITHUB 
+
+> "manage jenkins"-----> "embeddable build status pulgins" search for it and get installed .
+>  go to the "embeddable build status" , copy link for unprotected README.md and paste in README.md in github.
+> now status will be visible. 
+
+TYPE OF NODE 
+
+> ssh node 
+> docker node              //it will create new container for every build.
+
+
+
+ACHIVE ARTIFACTS 
+
+> we can get the what file we want directly in main screen , to get it we have to go to the post build and adde achive artifact and file name 
+  for **/filName to specify the path.
+
+>  COPY ARTIFACT PULGIN 
+
+   > To find the which artifact related to which job , job create MD5 checksum using artifact content(fingerprint).
+   > a job should give permission to access artifact and another job should copy that artifact.
+
+
+TEST RESULT AND REPORT FORMATE 
+
+> code coverage                           // during testing.
+> report formate                          // jacococ , cobertura
+> junit pulgin , code coverage API pulgin
+
+PARAMETERS PROJECT 
+
+STRING PARAMETER 
+   
+   > this project is parameterized select it , and give default values and description.
+   > build button will change to build with parameters. 
+
+CHOICE PARAMETER 
+   
+   > this project is parameterized select it and selecte choice parameter , and give choices.
+
+BOOLEAN PARAMETER 
+   
+   > this project is parameterized select it and selecte boolean parameter , if box is checked value ture if not false.
+
+RUN PREODICALLY 
+
+   > aliases  : @hourly , daily , midnight ,mounthly , weekly , annually.
+   
+
+ORGANIZING THE PROJECTS  
+
+> VIEWS AND FLODERS 
+   
+       > views is like filter , folder like structure in laptop floder to arrange it according to name working.
+       > create new view -----> name , use regular expression to simplify (.*Build.*). 
+       
+       > make a new folder name it 
+       > then right click on projects and click on move and select folder name.
+       > view only work for files in that phase to work it on subfolder.
+       > to change it edit view ---> recurse in subfolder.
+
+       > if you delete views no file will be deleted in that , but you delete folder files in that will get deleted.
+
+
+Groovy lang in jenkins 
+
+>  post {
+        success {
+            // Actions to be performed if the build is successful
+        }
+        failure {
+            // Actions to be performed if the build fails
+        }
+        unstable {
+            // Actions to be performed if the build is unstable
+        }
+        changed {
+            // Actions to be performed if the build status changes
+        }
+        always {
+            // Actions to be performed regardless of the build status
+        }
+    }
+
+----------------------------------------------------------------------------------------------
+pipeline {
+    agent {
+        label 'SLAVE_FIH1'
+    }
+    stages {
+        stage('FIH Sync') {
+            steps {
+               echo "sync from fih to local jio sync server"
+               build 'JOB/fih-sync'
+               
+            }
+        }
+        
+        stage('fih-jio-gerrit-update') {
+            steps {
+              echo "sync fih code syned on jio and build"
+              build 'JOB/fih-jio-gerrit-update'
+            }
+        }
+        
+        stage('update-manifest') {
+            steps {
+              echo "push head of fih manifest to jio gerrit"
+              build 'JOB/update_manifest'
+            }
+        }
+        
+        stage('Notify') {
+            steps {
+                echo "notification" 
+            }
+        }
+        stage('clean ') {
+            steps {
+              echo "clean all working dir to make fresh sync next day"
+            }
+        }
+    }
+}
+
+ENVINORMENTAL VARIABLES
+
+BUILD_NUMBER: This variable contains the current build number, which is automatically incremented by Jenkins for each build. You can use it for versioning or labeling builds.
+
+JOB_NAME: JOB_NAME contains the name of the job that's currently being built. You can use it to determine which job is being executed.
+
+BUILD_ID: This variable holds a unique identifier for the current build. It's typically used for archiving and tracking build artifacts.
+
+BUILD_URL: BUILD_URL is a URL to the current build on the Jenkins server. You can use this to access the build's information and artifacts.
+
+NODE_NAME: NODE_NAME contains the name of the Jenkins agent (node) where the job is running. Useful for distributed builds.
+
+WORKSPACE: As mentioned before, WORKSPACE stores the path to the workspace for the current job.
+
+GIT_COMMIT: If you're using Git for your project, GIT_COMMIT contains the SHA-1 hash of the current commit. This is useful for tracking which code version was built.
+
+BRANCH_NAME: In a Git-based project, BRANCH_NAME holds the name of the branch being built, if applicable.
+
+
+
+STATUS BADGE 
+
+
+PERMISSION OTHER USER 
+
+> Go to "configured global security" -----> Authoraization(select "martix based permissions").
+> To project based authorization , "configured global security" -----> Authoraization(select "project based permissions")
+      >> admin should have all permissions.
+      >> admin go to the specific project ,"genral" --> "enable project based security".
+      >> For floder type "properties" --> "enable project based security"
+
+CREDENTAILS(SENCITIVE INFORMATIONS)
+> to create new user "manage jenkins" -- > manage user.
+> TYPES OF CREDENTAIL 
+   
+      >> username password 
+      >> ssh key 
+      >> text string 
+      >> file
+> accessing credentails 
+
+      >> credentails()              //fuction 
+             >> assign one or more env var with values.
+             >> ex: enironment {
+                    STRING = credentials('secrate key')
+             }
+                env.STRING
+      >> withcredentails(){}        //build steps 
+
+> EMAIL THOUGHT POST ACTION OF PIPELINE
+
+   >> pipeline {
+    agent any
+    
+    stages {
+        // Your pipeline stages go here
+    }
+
+    post {
+        always {
+            script {
+                // Your post-action logic goes here
+                
+                // Example: Sending an email with a table
+                emailext body: '''
+                    <html>
+                    <body>
+                        <p>Here is a table:</p>
+                        <table border="1">
+                            <tr>
+                                <th>Header 1</th>
+                                <th>Header 2</th>
+                                <th>Header 3</th>
+                            </tr>
+                            <tr>
+                                <td>Data 1</td>
+                                <td>Data 2</td>
+                                <td>Data 3</td>
+                            </tr>
+                            <!-- Add more rows as needed -->
+                        </table>
+                    </body>
+                    </html>
+                ''', subject: 'Jenkins Pipeline Notification', to: 'recipient@example.com'
+            }
+        }
+    }
+}
+
+
+
+
+stage('user-prod'){
+                    agent {label "FEATURED_PHONE"}
+                    steps{
+                         sh '''
+                           # clone the source code
+                           git clone git@10.135.141.107:device_platform_project/kaios_prod/odm_prod/inovatech/inovatech.git ${NODE_NAME}
+                           
+                           # clone the jio-devops
+                           git clone "ssh://jiophone.repo@gerrit.jioos.jio.com:29418/jpn/bfih/jio-devops" -b kai-int ${NODE_NAME}
+                            
+                           # Give full permission 
+                            chmod 777 -R ${NODE_NAME}
+                           
+                           # navigate to the source code.
+                            cd ${NODE_NAME}/F271i 
+                           
+                           # Config the source code to requiered flavour
+                           bash ../jio-devops/f271i_config.sh debug ${BUILD_NUMBER}
+                           
+                           # Run the update.sh to build
+                           bash update.sh new
+                           
+                           '''
+                    }
+                }
+                
+                stage('user-dummy'){
+                    agent {label "FEATURED_PHONE"}
+                    steps{
+                        sh '''
+                           # clone the source code
+                           git clone git@10.135.141.107:device_platform_project/kaios_prod/odm_prod/inovatech/inovatech.git ${NODE_NAME}
+                           
+                           # clone the jio-devops
+                           git clone "ssh://jiophone.repo@gerrit.jioos.jio.com:29418/jpn/bfih/jio-devops" -b kai-int ${NODE_NAME}
+                            
+                           # Give full permission 
+                            chmod 777 -R ${NODE_NAME}
+                           
+                           # navigate to the source code.
+                            cd ${NODE_NAME}/F271i 
+                           
+                           # Config the source code to requiered flavour
+                           bash ../jio-devops/f271i_config.sh debug ${BUILD_NUMBER}
+                           
+                           # Run the update.sh to build
+                           bash update.sh new
+                           
+                           '''
+                    }
+                }
+
+
+
+
+
+
+
+
+
+
+                -----------------------------------------
+
+                post {
+        success {
+            emailext (
+                subject: 'Build Successful: pipeline FIH jio Gerrit Sync is Successful',
+                body: '${env.EMAIL_PART}',
+                to: 'nithesh.sp@ril.com',
+                mimeType: 'text/html'
+            )
+        }
+        
+        failure {
+               sh  'echo failed '
+        }
+    }

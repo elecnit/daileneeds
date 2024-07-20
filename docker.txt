@@ -1,0 +1,390 @@
+DOCKER 
+
+> clt + l            // to clear screen.
+> clt + r            // to get previously runned command. 
+
+> clair,trivy and dagda image scanner to protect from malicious one.
+
+> linux distros 
+     >> ubuntu 
+     >> alpine 
+     >> debian
+     >> fedora
+     >> centOS
+
+> PORTS 
+  > 0-65535 or 2 to power of 16
+  > common ports 
+        > 80,443 for https , http.
+        > 21 for ftp.
+        > 25 for email.
+  > three type of ports 
+      > Well-know/System ports 0-1023
+      > Register/User ports 1024-49151
+      > Dynamic/private ports 49152-65535
+
+> helps in build, run and ship our application.
+
+> fail of app or software.
+     >> missing tools 
+     >> diffrent configuration
+     >> hardware dependencies
+
+> configuration management tools (chef , ansibel ,puppet) 
+     >> requires knowledge about OS and  hardware.
+> virtual machines as code (harshiCrop , vagrant) 
+     >> heavy ,slowish , require inconvenient configuration. 
+
+> Containers 
+    
+    >> It virtualizes kernals of OS.
+    >> Run in contianer runtimes.
+    >> Workalong side of OS.
+    >> Do not require OS configuration.
+    >> Run one app at a time. 
+
+> Virtual machine
+    >> hypervisor is software used to create and mentain VM ex:   virtualBox , VMware , hyper-v (for windows).
+    >> It virtualizes hardware.
+    >> Run on top of hypervisor.
+    >> Need hardware emulation.
+    >> Require OS configuration.
+    >> Can run many apps at a time.
+
+
+> TAG          // Nothing but version of images.
+> docker run = docker container create + docker container start + docker container attach 
+
+> package 
+
+> docker build -t TagName .                                          // to build the image from dockerfile, -t for tag name  , . specify where to place the image where the context is.
+> docker "images" or "image ls"                                      // list the files.
+> docker run imageName                                               // to run the image.
+> docker pull image:TagName                                          // to pull the specific version of image.
+> docker run imageName:TagName                                       // run and logs.  It creates the images.
+> docker run -d imageName                                            // to not stock in interactive server , run in detached mode.
+> docker pull dockerHub_repo/imageName                               // to pull the image from dockerHub.
+> docker ps                                                          // process status of cotainers running.
+> docker ps -a                                                       // to see stoped containers as well.
+> docker run -it ImageName                                           // -it interactive , to start the container.
+> docker --help  
+> docker command --help                                              // details about command. 
+> docker container create                                            // to create container just create not run.
+> docker container create ImageName:TagName                          // TagName used to get specific type.
+> docker container start container_id_or_name                        // to start the image.
+> docker container start --attach IMAGE_ID
+> docker logs CONTAINER_ID                                            // to get the logs that created while container running.
+> docker buildx build --tag kai_project:v1 .                         // to build the images from Docker file.
+> docker build --file example.Dockerfile --tag TagName               // instead of using Dockerfile use example.Dockerfile
+> docker kill CONTAINER_ID                                           // kill the container.
+> docker exec CONTAINER_Name commandNeedToRun                             // to run only command from container.
+> docker exec -it CONTAINER_Name /bin/bash                                // to open interactive termminal.
+> docker stop CONTAINER_Name or ID                                        // to stop the image.
+> docker stop -t 0 CONTAINER_Name or ID                                   // to forcefull stop.
+> docker rm CONTAINER_Name                                                // to remove from list.
+> docker rm -f CONTAINER_Name                                             // to stop and remove.
+> docker ps -aq | xargs docker rm                                    // delete all containers.
+> docker images 
+> docker rmi imageName 
+> docker rmi -f ImageName
+> docker start CONTAINER_Name or ID                                       // to start the Image. To restart the Images with specific configuration which already exist.
+> docker run -p6000:6379 CONTAINER_Name                                   // to bind the port of contianer to the host's port.
+> docker logs CONTAINER_Name or ID                                        // to see the logs provided by the images.
+> docker -p6001:6379 --name CustomName ImageName:TagName             // to give the custom  name to the image.
+> docker network ls                                                  // to see docker networks.
+> docker network create CustomNetworkName                            // to create the custom network.
+> docker-compose -f FilName.yaml up                                  // to make the run container with requirments.
+
+> docker tag OldImageName UserName/NameYouWantInServer:version       // to change the name of the image , so that we can push it to server.
+> docker push UserName/NameYouWantInServer:version                   // to push it to dockerHub.
+> docker system prune                                                // it will remove useless data.
+> docker stats ContainerName                                         // CPU Usage of that container.
+> docker top  ContainerName  
+> docker inspect ContainerName  
+> sudo docker volume ls                                              // to see all available volumes.
+> sudo docker volume create geeksforgeeks                            // to create volume.
+> docker volume rm volume_name_or_id                                 // to remove volume.
+> docker volume create --opt type=none --opt device=/path/to/custom/location my_volume  //To create the volume with customized folder.
+> sudo docker run -it -v geeksforgeeks:/shared-volume --name my-container-02 ubuntu  // to create continer.
+> docker cp <container_id_or_name>:<path_inside_container> <path_on_host> // to copy the folder from container to host machine.
+> docker save -o OutputFileName.tar ImageName:tag                    // to get the current status image.
+> docker load -i path/to/tarFileOfImage                              // to load the image.
+> docker pac_doc dpkg --get-selections | grep '^install' > installed_packages.txt
+> docker tag <current_image_name>:<current_tag> <new_image_name>:<new_tag>  // to retag the image name.
+> docker-compose up                                                  // to create isolated container for app.
+> docker-compose down --rmi all 
+> docker-compose -f FilName.yaml up -d                                 // Run the services in detached mode.
+> docker-compose -f FilName.yaml down                                // to stop and remove the containers.
+> docker-compose -f FilName.yaml stop                                // To only stop the containers.
+> docker-compose -f FilName.yaml start                               // To start the containers.
+> docker-compose --project-name CustomeName -f FilName.yaml up -d    // To have the custome project name.
+> docker-compose restart 
+> docker netwrk create --driver bridge my_bridge_ntw                 // To create the bridge network.
+> docker network connect my-bridge-network container1                // To connect the container to the network.
+
+> DOCKER ARCHITECTURE
+  
+  
+  > docker engine creates the daemon which give cmd line to user to interact.
+  > Server and client 
+  > Server is called as docker engine  and  client as process.
+  
+> DEPLOMENT WORKFLOW
+  
+  > Application + "Dockerfile" (plain txt file).
+  > make application as Image 
+       >> It contains , A cut down OS 
+       >> A runtime evironment (eg Node)
+       >> Application files
+       >> Third party libraries
+       >> environment variables
+  > and make container use this image.
+  > Once we make this image it can be pushed to registery (dockerHub)                        // gitHub to git.
+ 
+>  PACKAGE MANAGER 
+
+   > pip
+   > npm
+   > yarn
+   > apt (advance package tool) ubuntu
+
+> ANATOMY OF CONTAINERS 
+ 
+  >> CONTAINER PARTS 
+      >> Namespace
+        
+        > USERNS                                             // user list 
+        > MOUNT                                              // access to file system
+        > NET                                                // network communication
+        > IPC                                                // interprocess communication
+        > TIME                                               // ability to change the time 
+        > PID                                                // process ID management 
+        > CGROUP                                             // create control groups
+        > UTC                                                // create host and domain names
+     
+     >> Control Group 
+         
+         > monitor and restrict CPU usage 
+         > monitor and restrict network and disk bandwidth
+         > monitor and restrict memory consumption
+*****************************************************************************************************************************************************
+ Example 1 :
+
+   FROM node:alpine                                                                         // depoly node on top of alpine linux distribution.
+   COPY . /app                                                                              // copy from current whole directry to image's file system "app" directory.
+   WORKDIR  /app 
+   CMD  node app.js                                                                         // command 
+
+   extra 
+   > push to dockerhub.
+   > "play with docker" website. 
+   > docker run dockerHub_repo/imageName.
+
+******************************************************************************************************************************************************
+ Exe 2:
+    
+ > go to dockerHub , search ubuntu. 
+ > in cmd "docker run ubuntu".
+ > "history"                                    // will command run preivously.
+ > !2                                           // ! with no of command , will run that command.
+ > apt install nano                             // to install nano.
+ > apt list                                     // to see all packages.
+ > apt update                                   // to update the database of packages installed.
+ > apt remove nano                              // to remove nano.
+
+ ******************************************************************************************************************************************************
+
+DOCKER FILE ALL COMMANDS 
+
+> CMD                                            
+
+
+
+CREATING DOCKER IMAGES 
+
+> Longway 
+
+   >> 
+
+*******************************************************************************youtube*******************************************************************
+
+
+> CONTAINER PORTS AND HOST PORTS
+    > container port through which container listen.
+    > host port through which we communicate with host.
+
+> DOCKER NETWORK DRIVERS
+   
+    > the images installed in same network will communicate with each other by just name.
+    > outside the network should be , through ports.
+    > Docker provide few networks , 
+
+    > How a container should communicate with each other , host and external network.
+    > Some major type of network drivers.
+       > Bridge 
+          > Standlone containers , communicate with  each other using ip or name of containers , communicate on same host.
+       > Host 
+          > It uses the network stack of host.
+       > Overlay 
+          > It's help the run containers in diffrent hosts and communicate with each other.
+       > macvlan
+          > It assign mac address to contianers , physical device connect to physical network.
+       > none 
+          > Isolated from network , the container don't need network acces. 
+
+
+> DOCKER COMPOSE
+
+   > to simplfy the run command and make it structured way. 
+   > Docker Compose is a tool for defining and running multi-container Docker applications.
+   > version: '3'
+          services:
+            web:
+              image: nginx:latest or ${TAG}   // if it is exported in the host. 
+              ports:
+                - "8080:80"
+              volumes:
+                - ./html:/usr/share/nginx/html      // source:target:mode (ro,rw)
+                - Example:/html:/usr/share/nginx/html  // This is for named volume example. 
+              environment:
+                - MY_VARIABLE=my_value
+              depends_on:
+                - ServiceName                       // docker will first start depends Service first. 
+    
+    > version: '3'                                  // Using the build command.
+            services:
+              app:
+                build:
+                  context: ./path/to/your/app
+                  dockerfile: Dockerfile
+                  args: 
+                    - BUILD_ARG=value
+                  command: ["./custom_build_script.sh"]
+                environment:
+                    - runtime_env=dev                   // If this is configured in host machine then no need to define here.
+                env_file:
+                    - ./folder/to/file                 // file defined with env var.
+                profiles:
+                    - exampleProfileServices
+            volumes:
+                  Example:
+                     
+                      > use of named volumes is that the when container is down and restarted the data will retrive from them.
+                      > docker-compose down --volume // will delete the volume to.
+    > there is a file called .env to which docker look for.
+    
+    > PROFILE 
+       > In order to run the only one services of all we use profile.
+       > while docker-compose --profile eampleProfileName up 
+       > if a service is not mentioned with profile then it default and runs all the time or we can give multiple profile name to to single services.
+  
+    > MUILTIPLE COMPOSE FILE 
+       > by defualt docker look two compose file docker-compose.yaml and docker-compose.override.yaml.
+       > docker-compose.override.yaml can have patch are whole structure.
+       > docker-compose -f docker-compose.yaml -f docker-compose.override.yaml
+
+############################ Tutorial ##########################################
+
+> Define and Run , multiple serverices ,  in 1 isolated environment .
+> Without compose 
+    > docker run -d \                                                    // To create the mangodb container 
+      -p 27017:27017 \ 
+      -e MANGO_INITDB_ROOT_USERNAME=admin \
+      -e MANGO_INITDB_ROOT_PASSWORD=admin \
+      --network mongo-network 
+      --name mongodb \
+      mongo
+
+    > docker run -d \                                                  // To create the mango express contianer
+      -p 8081:8081 \
+      -e ME_CONFIG_MONGODB_ADMINUSERNAME=admin  \ 
+      -e ME_CONFIG_MONGODB_ADMINPASSWORD=admin \
+      -e ME_CONFIG_MONGODB_SERVER=mongodb \
+      --network mongo-network 
+      --name mongo-express 
+      mongo-express 
+
+> Test-NetConnection -ComputerName <hostname> -Port 27017               // To check the availability of port. 
+
+> Above example using the docker compose . 
+
+   > version: "3"
+     services: 
+
+            mongodb:
+                 ports:
+                    - 27017:27017
+                 environment:
+                    MANGO_INITDB_ROOT_USERNAME: admin
+                    MANGO_INITDB_ROOT_PASSWORD: admin
+            
+            mongo-express:
+                 port: 
+                   - 8081:8081
+                 environment:
+                   MANGO_INITDB_ROOT_USERNAME: admin
+                   MANGO_INITDB_ROOT_PASSWORD: admin
+                   ME_CONFIG_MONGODB_SERVER:mongodb 
+                 depends_on:
+                    - "mongodb"      
+
+>  DOCKER NETWORKING 
+
+
+       
+
+
+
+
+> DOCKER FILE | CUSTUME DOCKER IMAGE
+
+ > To build the docker image of a application we need the artifact of that application.
+ > SYNTAX 
+     
+       >> #                  : For comment.
+       >> FROM               : To specify base image.
+       >> WORKDIR            : specify working directory.
+       >> COPY               : copy from machine to the container.
+       >> RUN                : to run command while building image ex. RUN apt-get update && apt-get install -y curl.
+       >> ENV                : to set the environment varable ex. ENV MY_VARIABLE=my_value
+       >> EXPOSE             : mention the port that container will  listen. EXPOSE 80
+       >> CMD                : to run command at start of container. CMD ["nginx", "-g", "daemon off;"]
+       >> ENTRYPOINT         : same as CMD , but connt override during runtime. 
+       >> 
+
+
+> CLONING THE SERVER INTO DOCKER CONTAINER 
+
+> Check the libraries installed using package manager.
+   On Debian/Ubuntu: Use dpkg --get-selections or apt list --installed.
+   On CentOS/RHEL: Use rpm -qa.
+   On Alpine Linux: Use apk info.
+> configure files. 
+   '/etc or /etc/config'
+> add-apt-repository
+
+
+
+
+
+
+
+*********************************** PROJECT *****************************************************************************************
+
+
+> docker run -p 2312:2312 -d -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=secrate  --name CustomName --net YourNetwork  ImageName(mango)
+> docker logs ImageId
+> For easy reading you can specify the long configure like below.
+          
+             >> docker run -d \ 
+             >> -p 2312:2312 \
+             >> -e MONGO_INITDB_ROOT_USERNAME=admin \
+             >> -e MONGO_INITDB_ROOT_PASSWORD=secrate \ 
+             >> --name CustomName \ 
+             >> --net YourNetwork \ 
+             >>  ImageName(mango) + enterBtn 
+
+
+
+
+      

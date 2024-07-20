@@ -1,0 +1,179 @@
+GIT
+
+> tracking file can be in three state modified , staged and commited.
+> git config -l // to see the directory info
+> clrt + c // go to command mode and type :q (to quit) , :wq (save and quit) , :q! (save and quit) , :w (save).
+
+> git commit -a -m                           // is used to commit the tracking files , not untrack one. 
+> git log -p                                 // is used to show the changes that to made to commit state to previous state.   
+> git log --stat                             //this is  used to show some statactics of change.
+> ls -la                                     // to see hinden files.
+> git reset fileName                         // helps to unstage the file that is staged.
+> git commit --amend                         // used to change the last commit to the current staging state.
+> git revert HEAD                            //  used to  reverse the commit last commit to  it's previous state with new commit.
+> git branch                                 // show all present branch .
+> git branch new-branch                      // creates the new branch.
+> git checkout new-branch                    // to swift to branchs.
+> git checkout -b new-branch                 // do create new branch and swift to it.
+> git branch -d new-branch                   // to delete the branch , this branch must be merged with master branch , or use -D in place -d if you sure.
+> git merge new-branch                       // this merges the branchs , two algorithms , fast-forward and three way merging.
+> git log --graph--oneline                    // shows the breif history.
+> git clone url                              // to clone remote repository.
+> git push                                   // to push the changes to the remote repository.
+> git pull                                   // to pull the changes , after connecting to the remote repository.
+> git remote -v                              // to see the remote url .
+> git remote show origin                     // shows remote repos info.
+> git branch -r                              // show the branch that tracking in remote.we cann't directly change remote branch first pull , mrege then push.
+> git fetch origin/master                    // to fetching the changes made in remote repo to local repo.
+> git merge origin/master                    // to merge the change that fetched to the local repo.
+> git checkout branchInRemoteRepo            // the branch that is not in local directory to fetch and mrege it.
+> git push origin HEAD:remoteBranchName      // this is used when to push the branch that is clone of issue remote branch to that remote branch.
+> git remote add upstream url                // to set the url for upstream  when fork is used.
+> git restore --dry-run filesName            // what changes made by restore without applying them.
+> git config -l                              // shows the current configaration.
+> git remote add remoteUrl                   // to add remote repos url.
+> git push origin main                       // to push the local repo to remote repo.
+> git cherry-pick                            // used to extract only specific commit to this branch.
+> git reset --soft commithash                // it move to specfic commit in index.                
+> git rest --hard  commithash                // it move to specific commit in working dir and index.                          
+> git config --global core.excludesfile [file] // path to the file containing ignore pattern.
+> git stash                                 // it will save the changes.
+   >> git stash apply  [index]               // the to apply the changes.
+   >> git stash pop                          // to remove from list FIFO order.
+   >> git stash list                        //  to see list of changes.
+> git clean 
+   >> git clean -f                          // delete untracked file.
+   >> git clean -d                          // delete untracked folder.
+   >> gir clean -n                               
+> if got merge conflict first use anyone----> add that file --------> commit it ----------> then merge .
+
+> git push -u origin branchName              // when to push new branch we use -u to set upstream path.
+  >> git push --all origin                   // to push all branchs.
+> git push --delete origin branchName        // delete the remote branch.
+> git log --graph--online --all              // shows the breif history of all branchs.
+> git rebase --continue                      // to continue the rebase after an conflict is occured.
+> git rebase branchName                      // merge the current to mention branch.
+> git rebase <branch>/commit                 // used to rewrite the history.
+   >>  git rebase --interactive <branch>/commit  
+   >>  git rebase -i HEAD-#                  // to open the editor and rewrite. from head to number of commits.
+   >>  git rebase -i --root                  // same as above but all commits.
+> HEAD                                       // refer to the last commit in current branch. 
+> git tag versionName                        // to create a tag.
+   >> git tag -l "v1.*"                      // list the tags with start with "v1."
+   >> git push origin TagName                // to push the tag to remote , it will reflect in relases.
+   >> git push --tags                        // to push all tags.
+   >> git tag -d TagName                     // to delete the tag in local.
+      >> git tag --delete TagName
+   >> git push origin -d TagName
+   >> git tag TagName CommitId               // to create the tag for previous commits.
+ > git tag -a versionName -m "this  the relase version"   // this is the relase version.
+ > git diff > my_patch.patch                 // to get the patch into file.
+ > git apply my_patch.patch                  // to apply the patch.
+   
+> GIT UNDO
+   
+    > git revert 
+       > This change the history by rewriting the commit history with new commit.
+       > git revert --no-commit will just  the change the working dir and stagging area to that commit. 
+       > we should revert one by one in reverse cronological order , git revert --no-commit ID will remove the changes made by that commit.
+    > git reset 
+       > This reset to the specfic commit.
+       > git reset --soft                     // Only in commit history. 
+       > git reset --mixed                    // In in stagging area as well as in commit history to that commit.
+       > git reset --hard                     // Make changes in all Three commit history , stagging area and working dir.
+   > git commit amend
+       
+
+HOW TO CLOSE REQUEST THAT LINKED TO ISSUE
+
+> We can use describtion in pull request and  are in commit to colse the issue using keyword .
+  >> close  , closes , closed , fix , fixes , fixed , resolve , resolves , resolved. 
+
+
+> DIFFRENT SENARIOS
+  
+ >> ISSSU IN THE SAME REPOSITORY 
+     
+        syn: KEYWORD #ISSUE-NUMBER       ex: Close #2
+ 
+ 
+ >> ISSUE IN DEFFERENT REPOSITORY
+     
+        syn: KEYWORD OWNER/REPOSITORY/#ISSUE-NUMBER  ex: Fix raj/welcome/#2
+
+> only manually linked pull request can be manually unliked. 
+
+
+
+> MARKDOWN LANGUAGE 
+
+> # <h1> , ## <h2>, ### <h3>, #### <h4>, ##### <h5>, ###### <h6>.
+> below the text line ==== for h1 , ---- for h2.
+> **bold**     
+> __bold__
+> *italic*
+>-italic-
+> ~~strick through~~
+>  > Quotation
+> --- Horizontal line 
+> *** Horizontal line 
+> ___ Horizontal line 
+
+> LIST 
+  >> -
+  >> + 
+  >> *
+
+> LINK 
+  >> [website] (http//:sdfsmfd.com "LinkedIn")
+  >> [LinkedIn]
+  >> [Learning] [1]
+  >> [linkedin]: http//:sdfsmfd.com
+  >> [1]: http//:sdfsmfd.com
+
+> IMAGE 
+  
+  >> ![Tomolor](http//path/to/image.png)
+  >> [Tomolor]: http//path/to/image.png
+  >> [![Tomolor](http//path/to/image.png)](http//:sdfsmfd.com )
+
+> CODE 
+
+  >> 'to code single line'
+  >> '''py                   // to color the code 
+       one=1        
+       print(one)
+     '''
+
+FOOTNOTE 
+   this is [^1] and [^2].
+   >> [^1]:My refernce
+   >> [^2]:My refernce to page
+
+> TABLE 
+
+ >> | ONE | TWO | THREE |
+    | --  | :-: | --:   |
+    | 1   | 2   | 3     | 
+
+> CHECK LIST 
+  >> [x] DONE    checked 
+     [ ] Unchecked 
+ 
+
+> ORGANIZING THE PROJECT 
+   >> Contributors
+   >> issues 
+   >> labels
+   >> Milstones 
+   >> projects
+
+> THIS IS ABOUT THE .git FOLDER
+  
+   >> objects: This directory stores all the data for your repository – the files that hold the snapshots of the project at different points in time, as well as the commit objects, trees, and blob objects.
+   >> refs: This directory contains references to heads (branches), tags, and remote repositories.
+   >> HEAD: This file points to the latest commit in the branch you are currently working on. It essentially tells Git which branch you currently have checked out.
+   >> config: This file contains configuration options for the Git repository.
+   >> hooks: This directory contains scripts that can be triggered at certain points in the Git workflow, such as before or after commits.
+   >> index: This file is the staging area where changes are placed before they are committed. It keeps track of the changes that will be included in the next commit.
+   >> logs: This directory contains records of changes in the repository.
