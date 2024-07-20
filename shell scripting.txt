@@ -1,0 +1,780 @@
+> FILES SYSTEM 
+
+1.   / (Root Directory): This is the top-level directory in the file system hierarchy. All other directories and files are contained within it.
+
+2. /bin (Binaries): Contains essential binary executables (programs) that are required for the system to boot and run, such as basic system commands like ls, cp, and mv.
+
+3. /boot (Boot Files): Contains boot loader files and kernel images used during the system boot process.
+
+4. /dev (Devices): Contains device files, which are special files representing hardware devices (e.g., hard drives, terminals, printers).
+
+5. /etc (Configuration Files): Contains system-wide configuration files for various applications and services.
+
+6. /home (Home Directories): Contains user home directories where users store their personal files and configurations.
+
+7. /lib (Libraries): Contains shared libraries needed by the system and installed programs.
+
+8. /media (Removable Media): Mount point for removable media such as USB drives and optical discs.
+
+9. /mnt (Mount Points): Historically used as a mount point for temporary filesystems or external filesystems, though it's often replaced by /media or /mnt/<device_name>.
+
+10. /opt (Optional Packages): Typically used for installing optional software packages that are not part of the operating system's standard distribution.
+
+11. /proc (Process Information): Contains virtual files that provide information about system resources and processes.
+
+12. /root (Root Home): Home directory for the root user.
+
+13. /sbin (System Binaries): Contains binary executables (programs) used for system administration tasks, typically meant for use by the root user.
+
+14. /srv (Service Data): Contains data for services provided by the system.
+
+15. /sys (Sysfs Virtual Filesystem): Contains information about devices, drivers, and some kernel settings, presented in a file system-like hierarchy.
+
+16. /tmp (Temporary Files): Used for temporary storage of files by programs and users. Contents are typically deleted upon system reboot.
+
+17. /usr (User Binaries and Data): Contains user-related programs, libraries, documentation, and other data not required for the system to boot or run in single-user mode.
+
+18. /var (Variable Data): Contains variable data files that may change frequently during normal system operation, such as log files, spool files, and temporary files used by various programs.
+
+> Types of User 
+
+   > Root user(super user)
+   > normal user 
+   > system user (this is not human user , this are deamon while installing.)
+
+
+> Debian-based systems , Red Hat Enterprise Linux (RHEL) , Fedora , Arch Linux , openSUSE
+  >> Ubuntu
+  >> Linux Mint
+  >> elementary OS 
+
+
+
+
+
+
+INTRO TO THE SHELL SCRIPTING
+
+SEARCHING IN VIM EDITOR 
+
+Esc + : + number of line            // go to the line specified.
+Esc + /searchword                   // to search the word. 
+Esc + /functionName(                // to search function.
+Esc + : + set number                // to set number along files.
+Esc + : + set number                // to unset number along files.
+
+
+WAYS OF EXITING VIM EDITOR 
+:wq                                 // save and exit 
+:q!                                 // quit without saving
+:q                                  // quit without saving change , if edited will  not allow to exit.
+:w                                  // save 
+:wa or wqa                          // save all open files.
+:wqall or :xa                       // save all open files.
+:qall! or :xall                     // quit without  saving.
+
+
+SHELL COMMANDS
+
+
+> echo $0                           // used to check the what kind shell is installed.
+> whoami                            // show the username.
+> pwd                               // to show working dir.
+> vi fileName                       // to create a file and edit it.
+> shift + : + wq                    // to save and exit.
+> #!/bin/bash                       // is called shebang to specify the which bash should be used.
+> #!/usr/bin/env python or node     // to specify other shell scripting tools.
+> ls -ltr                           // to see the permissions for the file.
+> ./script.sh , /path/script.sh     // to run the script.
+  bash script.sh
+> chmod +x fileName                 // to change mode like read , write , execute.
+> #                                 // single line comment.
+> <<comment commentLine comment     // multiline comment.
+> VAR_NAME=VALUE                    // to store the value in a varible.
+> VAR_NAME=$(hostname)              // used to store the value of an command like pwd , ls.
+> $VAR_NAME                         // to use the varible.
+> ArrayName = (1 4.4 hi "r r")      // Syntax for array. values seprated by space.
+> ${ArrayName[1]}                   // to get value of that index. replace no with * to access all value.
+> ${#ArrayNmae[*]}                  // to get lenght of the array.
+> ${ArrayName[*]:2:3}               // to get specific values from array , from 2 index , get 3 values. 
+> ArrayName+=(newVal1 newVal2)      // to add the new value to existing Array.
+> cp filetocopy towhichfile         // to copy the content of one file to another.
+> break                             // to come out of loop.
+> continue                          // to skip  that iteration.
+> sleep                             // to sleep the system. 
+> exit                              // tp exit from the shell script.
+> $?                                // to check wheather the previous command is succesfull or not.
+> $!                                // to know the process ID of previous command.
+> basename                          // gives file removing all path.
+> dirname                           // gives the dirrectory of file.
+> realpath                          // gives the full path of the file , where command runned.
+> [[ -f filepath ]]                 // to check wheather the file exist or not.
+> [[ ! -f filepath ]]               // to check file doesnt exist.
+> [[ -d dirpath ]]                  // to check dir.
+> [[ ! -d dirpath ]]                // to check dir doesn't exist.
+> [[]] , test                       // to do conditional operations.
+> (()) , let                        // to do arthematic operations.
+> cksum fileName                    // used to get unique id.
+> su -                              // to swift from user to another it ask for password you can enter the password of any specific password.
+> ping                              // used to check the internet protocal.
+> RANDOM                            // genarates random number every time it's run.
+> UID                               // gives user ID , root userID is 0.
+> >                                 // to rewrite the previous content.
+> >>                                // to add up content.
+> &>, > , 2>                        // to redirect both stdout , stderr , > to stdout , 2> stderr.
+> < , <<                            // input file and current input.
+>   >/dev/null                      // to avoid put output in any file.
+> ${0}                              // gives the current file name.
+> -u                                // diffrent user.
+> sudo                              // superuser do , to do previleged work.
+> less                              // convinent to wounder through lrage txt file.
+> logger                            // to create log , it will present in var/logs/message/ .
+> set -e                            // to exit the script when a command fails.
+> set -x                            // to debug the script.
+> nohup fileName                    // to run the file in background.
+> free                              // shows the ram used and free space.
+> grep                              // global regular expression print to serach for regular expression and print from text.
+> $((exp))                          // to execute the arthamatic exp. 
+> top -c                            // to see weather the commands were running or not.
+> lunch                             // to run multiple processors.
+> make                              // used to read the makefile to follow the procedure to complie code and connect object files.
+> source                            // to load varibles from script and run the script in current session of shell.
+> ps                                // process status , show currently running processess.
+> =~                                // matching operator used check wether the value of left match the regular expression pattern in right.
+> man [options] command             // to get manual of the commands. -k to use keywords ,  -f for short discription.
+> () and {}                         // value inside () vanish and {} value retain.
+> alias                             // to change the name of the command example) alias sl=ls.
+> env                               // used to print all environment variables.  
+> printenv                          // used to print all environment variables.  
+> unset                             // to distroy the created environment variable
+> export variale=variablValue       // to create environment variables.
+> typeset [option] varName          // same as declare. -i to specify int type for varName.
+> zip -r compressed_file.zip folder_to_compress //to compress the floder into zip.
+> unzip  folder_name                // to unzip the zip folder.     
+> command -v command_name           // gives path if command is installed.
+> type -p command_name              // gives path if command is installed.
+> wc -l                             // word count give the count.   
+> more fileName                     // same as cat command 
+> comd1; comd2                      // Sequential Execution regardless of execution of comd1 pass or fail.
+> command1 && command2              // If and only if command1 passes. 
+> command1 || command2              // only if command1 fails.
+> (command1; command2)              // execute in subshell of current shell.
+
+> TO CREATE USER 
+   >  useradd -m myuser 
+   >  echo "myuser:password" | chpasswd 
+   >  usermod -aG sudo myuser
+   >  su - username     
+   # Allow sudo without password
+   > echo "myuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+> Tar 
+  >> tar -xvf archive.tar                                             // To read tar.
+  >> tar -cvf archive.tar /path/to/directory_or_file                  // To make tar.
+
+         
+
+
+>  KEY VALUE PAIR
+   
+   >> declare -A ArrayName                         //to declare the KeyValue pair object.
+   >> ArrayName = ([name]=Nithesh [age]=22)        // initialaizing keyValue pair.
+   >> echo "ArrayName[name]"                       // to access the value.
+
+> STRING 
+   
+   >> Var="good"
+   >> echo "${#Var}"                // to access the length of the String.
+   >> ${Var^^}                      // to convert to Capital case.
+   >> ${Var,,}                      // to convert into small case.
+   >> ${Var/good/Bad}               // to replace the value of the String.
+   >> ${Var:2:4}                    // from 2 index next 4 char.
+   >> ${var#pre}                    // remove the matching from prefix.
+   >> ${var%suf}                    // remove matching from sufix.
+   >> a="A"
+      A=abc 
+      echo '${!a}'                 // will execute the val of a containing.read -a c <<< $b]
+   >> read -a c <<< $b             // to convert the string into array.
+
+> USER INTERFACE
+
+   >> read Varname                  // this var will wait to user enter the value.
+   >> read -p "message" Varname     // description and input.
+
+> ARTHEMATIC OPERATION
+  
+  >> let $var1+$var2               // to do the arthematic opertion.
+  >> (($var1+$var2))               //another way.
+
+> CONDITIONAL OPERATION
+
+  >> if [[ $mar -gt 35 ]];           // [] or [[]]  , -gt(greaterthen) , -lt(lessthen) , -eq/== (equal) , -ge(greaterthenorequalto) , -le(lesserthenorequalto) , -ne/!= notEqual
+     then 
+        true condition statment
+     else
+        false condition statment
+     fi
+ 
+  >> if [[ $mar -ge 80 ]];
+     then 
+         echo "good score"
+     elif [[ $mar -ge 50 ]];
+     then 
+         echo "Not Bad"
+     else 
+        echo "Too Bad"
+     fi
+
+  >> -eq this is for numbers and == for string.
+
+> CASE
+   
+   >> case $var in 
+            case1)statment;;                      // ;; to indecate the end of statment.
+            case2)statment;;
+            [Nn][Oo])statment;;                   // first char and second char be one of that patterns.
+            *) echo "provide valid input";;       // default statment.
+       esac
+   >> 
+
+   >> case $var in 
+            case1)statment;;&                     // if case match then also checks for next case .                      
+            case2)statment;;
+      esac
+
+> LOGICAL OPERATORS
+   >> (())                                        // double paranthisis requiered.
+   >> || , &&        
+   >> exp && statment1 || statment2               // short form of if condition.if true statment1 else 2.
+
+> LOOPS 
+   
+   > FOR LOOP
+     
+        >> for i in 1 2 2                        // syntax for for loop.
+            do   
+                echo "$i"
+            done
+       
+        >> for i in goat eats grass              // to iterate through the string.
+        >> for i in {1..20}                      // wildcard , to autofill in between.
+        >> URl="/home/find.txt"                  
+           for i in $(cat $URL)
+               do 
+                  echo "$i"
+               done
+       >> for (( i=0;i<${#Arr[*];i++} ))         // as like python programing lang
+
+
+    > WHILE LOOP
+         
+        >> count=0
+           while[[ count -le 10 ]] 
+           do 
+                  echo "$count"
+                  let count++
+           done
+   
+    > UNTIL LOOP
+      
+        >>count=0
+           until[[ count -eq 0 ]]     
+           do 
+               echo "$count"
+               let count--
+           done
+     
+    > INFINITE LOOP
+   
+          >> USING WHILE LOOP
+              
+                    > while [[ true ]];
+                      do
+                           echo "hi"
+                           sleep 2s
+                      done
+         >> USING FOR LOOP
+              
+                    > for (( ; ; ))
+                      do
+                           echo "hi"
+                           sleep 2s
+                      done
+                           
+
+    > READING FILE USING WHILE
+                    
+                  > while read var;
+                     do
+                          echo $var
+                     done<r.txt                : tells that refer to this files.   
+    > READING CSV FILE USING WHILE
+
+                 > while IFS="," read arg1 arg2 arg3
+                      do 
+                          echo arg1
+                          echo arg2
+                          echo arg3
+                      done < r.csv
+
+                 > TO AVOID FIRSTLINE USE AWK COMMAND
+                    
+                     >> cat r.csv | awk 'NR!=1 {print}' | while IFS="," read arg1 arg2 arg3 
+                        do 
+                            echo arg1
+                        done
+
+> FUNCTIONS
+    
+    > function functionName {                     // declaration of function.
+                         code statment..
+                             }
+    > functionName() {
+                        code statment..          // another way of declaration of function.
+                            }
+    > functionName() {                           // used to get args
+                 var=$1                          // $1 first arg
+                 var1=$2                         // $2 second arg
+                            }
+       functionName 2 3                          // calling function with specifing values
+
+
+> ARGUMENTS PASSING WHEN CALLING FILE
+ 
+      >> $#                                      // to get the number of arguments
+      >> $@                                      // to get all arguments
+      >> $1 $2                                   // to access individual arguments
+      >> shift                                   // to combine rest of the arguments ex) r.sh 1 2 3      r.sh) $1 (1) shift $2 (23)  
+      >> shift number                            // move to right removing specified number of args.
+
+
+> SCHEDULING 
+ 
+ > USING AT
+    >> atq                                       // to check the schedule.
+    >> atrm                                      // to remove the schedule.
+    >> at + clt,d                                // to set the schedule.
+ 
+ > USING CRANJOB
+    >> crontab -e                                // to create and edit the cron job.
+    >> crontab -l                                // to view the list of all vron jobs.
+    >>  * * * * * cd path && ./fileToExecute(in editor)   // l-r * (mins) * (hours) * (day) *(month) *(days) , - (to range) , (for and).
+
+> OPTIONAL AFTER ls  
+    
+   >> -a : to show the all files hidden one also.
+   >> -t : sort the files one bases of time of modification , recently modified first.
+   >> -l : long formate , like date , size ,permissions and owner.
+   >> -h : display in human readable formate.
+   >> -r : reverse the order of the sorting of files.
+   >> -R : recurcivly mentioning of files and even files in subdirectories.
+   >> -F : classify the files and directories like ('/' for dic and '*' for exeutable).
+   >> -G : no-group do not print group name in long formate.
+   >> -o : list long formate without group info.
+   >> -1 : to print in new line with no other information.
+   >> -i : indexnode , print the inode of the files.
+   >> --ignore=<pattern> : to ignore the files that matchs to the following pattern. 
+   >> -c : count.
+   >> -mt : to show in megabytes and total.
+   >> -v : doesn't match with pattern.
+   >> -z : in if condition to check wheather the var have zero char or not.
+   >> -x : To check weather a file executable or not.
+
+ACTIONS
+
+> cltr+l                            // for clear the previous commands from screen.
+> press i                           // when editor is open to insert.
+> esc                               // to comeout from the editing mode.
+
+
+
+
+CHMOD (chmod [option] mode file)
+
+OPTION
+
+> -c               : used to display the message only when change mode is happened.
+> -f               : to supress the most of error messages.
+> -R               : to recursive apply.
+> --help           : how to use chmod.     
+
+MODE 
+
+>usercatagory      :g group , u owner , o other or combination of all.
+>operator          :+ - =.
+>permissions       :r w x.
+
+>Read (r): Represented by the value 4.
+>write (w): Represented by the value 2.
+>Execute (x): Represented by the value 1.
+
+
+
+>	EXIT
+
+> exit code goes from 0 to 255.
+
+ECHO 
+
+-n                  : to shouldn't add the new line. 
+-e                  : to enable to special char.
+-E                  : to disable the special char.
+
+> ENVIRONMENTAL VARIABLES
+
+   >> $TERM             : terminal.
+   >> $PATH             : To know the path.
+   >> $EDITOR           : editor.
+
+EXPORT 
+
+export -p            :to get list of export variables.
+export -n            :to abort the function made avaliable for other bash file (session).
+export -f            :to make function avaliable for other script.
+
+
+FIND
+
+-name pattern                  : Search for files and directories with a specific name or matching a specific pattern.
+
+-type type                     : Specify the type of files to search for (e.g., -type f for regular files, -type d for directories).
+
+-maxdepth levels               : Limit the search to a specific depth in the directory hierarchy.
+
+-mindepth levels               : Specify the minimum depth for the search.
+
+-mtime n                       : Search for files modified approximately n days ago.
+
+-mmin n                        : Search for files modified approximately n minutes ago.
+
+-atime n                       : Search for files accessed approximately n days ago.
+
+-amin n                        : Search for files accessed approximately n minutes ago.
+
+-ctime n                       : Search for files with attribute changes approximately n days ago.
+
+-cmin n                        : Search for files with attribute changes approximately n minutes ago.
+
+-size n[cwbkMG]                : Search for files of a specific size. You can specify the size in bytes (c), 2-byte words (w), 512-byte blocks (b), kilobytes (k), megabytes (M), or gigabytes (G).
+
+-user username                 : Search for files owned by a specific user.
+
+-group groupname               : Search for files belonging to a specific group.
+
+-perm mode                     : Search for files with specific permissions (e.g., -perm 644 for files with read-write permissions for the owner and read-only permissions for others).
+
+-exec command {} \;            : Execute a command on each file found by the find command. {} is a placeholder for the file or directory found.
+
+-print                         : Print the names of the files and directories that match the search criteria.
+ 
+-print0                        : Like -print, but separates the output with null characters, making it suitable for processing with other commands.
+
+-delete                        : Delete the files and directories found by the find command.
+
+-depth                         : Process the directory tree in a depth-first manner.
+
+-follow                        : Follow symbolic links.
+
+-not                           : Negate a condition. For example, use -not -name "*.txt" to exclude files with a .txt extension.
+
+
+
+
+GREP 
+
+> grep options "pattern" fileName  
+> options 
+   
+   >> -i                       : ignore the case. 
+   >> -r or -R                 : recursive search.
+   >> -l                       : display the name of file.
+   >> -c                       : count of the matching lines. 
+   >> -n                       : prifix to the match with line number. 
+   >> -v                       : display the line that don't match.
+   >> -w                       : whole word should match. 
+   >> -e                       : allows the multiple patterns. 
+   >> -A                       : context after.
+   >> -B                       : before context. 
+   >> -C                       : context before and after.
+   >> -q                       : this shows only status code without output.
+   >> -E                       : process in ERE 
+   >> -G                       : process in BRE 
+   >> -P                       : process in PCRE 
+   >> -f                       : allow pattern from file 
+   >> -x                       : match whole line
+   >> -o                       : show the pattern that matched 
+   >> -p                       : only return the code not match 
+   
+ 
+BASH READ SOME STARTUP FILES 
+
+> .bash_profile
+>  bashrc
+
+DECLARE 
+
+declare -l  variable            : for value in variable is forced to lowercase.
+declare -u  variable            : uppercase.
+declare  -r  var                : make readonly. 
+
+
+TAIL 
+
+tail [options] [filename]
+
+option 
+
+ -r                             : this used to do opposite of tail to read start from start. 
+ -f                             : this working real time.
+ -n                             : this helps to specify no of lines.
+
+
+SED (stream editor)
+
+> it is used to text manipulation tasks like adding , deleting and replacing.
+
+> Syntax: sed 's/pattern/replacement/' input_file      ex: sed 's/old/new/' input.txt   : used to replace the old with one in file.
+> sed 's/old/new/g' input.txt                                                           : setting g command it done for whole file.
+> sed -i 's/old/new/g' input.txt                                                        : it will insert and change original one. 
+> sed -n '/pattern/p' input.txt                                                         : print the line containing pattern.
+> sed '/pattern/d'  input.txt                                                           : delete the line match pattern.
+> sed 'pattern/i new line'  input.txt                                                   : inset the new line before the matched pattern line.
+> sed 'pattern/a new line' input.txt                                                    : insert  after the matched line. 
+> sed 's/[0-9]/X/g' input.txt                                                           : Replace numbers with "X"
+> sed -f sedinfile fileName                                                             : sed command may be in file and can run it.
+> sed '/old/c\new'                                                                      : to replace entire line.
+> use " " to enable variable expansion means val to get it's val
+> -E                                                                                    : to enable Extended regular expression. 
+> sed -i "s/\(ro.fota.sw_ver=\).*/\1$constructed_number/" path/of/file     S             : \1 retains the matched pattern.
+> sed -n '5,10p'                                                                           : to print from 5 to 10 lines
+> sed -n '5,10d'                                                                           : to delete from 5 to 10 lines
+> sed -E 's/[0-9]{3}/(&)/' phone.txt                                                    : & will remember the match value. 
+> sed -e '...' -e '...' file                                                            : to check multiple patterns 
+
+REGULAR EXPRESSION 
+
+WC (word count)  [ wc option file_name]
+
+> -l                                                                                     : for line count 
+> -w                                                                                     : for word count 
+> -c                                                                                     : for char count 
+> -L                                                                                     : show line with highest lenght.
+> -m                                                                                     : no of bytes in specified file.
+
+JOBS 
+
+> jobs                                                                                   : shows the running jobs.
+> fg %1                                                                                  : forground the job.
+> bg %1                                                                                  : background the job.
+> kill %1                                                                                : kill the job.
+
+SFPT (sftp [options] [user@]host[:/path])
+
+> option 
+   >> -b                                                                                 : use the batch file.
+   >> -o                                                                                 : specify other ssh option.
+   >> -P                                                                                 : specifing the port number.
+   >> -i                                                                                 : to specify the private key path.
+> sftp username@remote_host
+
+
+
+COPROC (coproccess)
+
+> coproc ./fileName.sh                                                                   : it will make script to run in background ,and create imaganary read file , write file.                          
+  echo Hello >&"${COPROC[1]}"                                                            : to give input.
+  cat  <&"${COPROC[0]}"                                                                  : to read the output.
+
+> coproc NameIwant { ./fileName.sh ; }                                                   : to access through name.
+  echo input >&"${NameIwant[1]}"
+  cat <&"${NameIwant[0]}"
+
+
+
+DU (Disk usage) AND DF (Disk free) 
+
+> df -h /folder/to/see                                                                   : display disk space usage , free , dje to -h shows in human readable formate.
+> du -h /folder/to/see                                                                   : display consumtion of space by folder.
+> du --max-depth=1 /folder/to/see                                                        : one sub directory. 
+> du -k , -m , -g /folder/to/see                                                         : in diffrent froms kilo , mega and giga bytes. 
+> du --apperent-size /folder/to/see                                                      : size in 1k units.
+> du -s /folder/to/see                                                                   : show size of specified folder.
+
+
+PATTERN AND REGULAR EXPRESSION ----------------------------------------------------------------------------------------------------------------------------------- 
+
+> Globs 
+> Extended globs 
+> Brace expansion
+> Basic Regular expression
+> Extended Regular expression
+
+Order of expansion consider 
+
+> Brace > tilde > parameter > variable > arthamatic > word spliiting > file name expansion.
+
+> globs expands filename and regular expression expands text.
+> shell expands the pattern to avoid confision we close regular expression in single qoutes.
+> special characters 
+      > [ ] ^ ! 
+> Charcter class 
+   > class                                      match 
+     [:lower:]                               lower case char 
+     [:upper:]                               upper case char 
+     [:digit:]                               numbers
+     [:alpha:]                               both lower nad upper case 
+     [:alnum:]                               alpha and numbers 
+     [:space:]                               space , tabs and newline   
+     [:graph:]                               printable char not included spaces                       
+     [:print:]                               printable char included spaces 
+     [:punct:]                               puncuation
+     [:cntrl:]                               Non-printable control char 
+     [:xdigit:]                              hexadecimal
+> shell glob options 
+   
+   > nullglob , failglob , dotglob , globstar , nocasematch ,  nocaseglob , extglob.
+   > set the value to null it doesn't match 
+   > give error 
+   > show hidden files to 
+   > recursivly check and give contant 
+   > shopt -s <option>   (to set shell option )
+   > shopt -u <option>   (to unset option)
+   > shopt -p <option>   (to print the current value)
+
+> Extended Globs 
+   
+   > Pattern can be more than one char 
+   > Matchs muiltiple occurence
+   > Allowing grouping patterns 
+   > Nesting pattern groups 
+   > Logical AND and OR 
+
+   > @(match)                               this matchs the exactly one time
+   > ?(match|match)                         matchs two match exactly once 
+   > +(match|match)                         matchs one or more occurenece 
+   > *(mstch|match)                         match zero or more occurenece 
+   > !(match|match)                         inversion of pattern 
+   > !(?(match|match))                      inversion of zero or one occurenece 
+   > %                                      to remove the pattern from ending of the value 
+     > file=name.tar.gz                        
+       echo ${file%.*}                        used to remove pattern after the first apperance of dot from right side.
+       echo $(file%%.*)                       used to remove pattern after the first appearence of dot from left side. 
+   > #                                      to remove the pattern from beginning of the value
+   >  > file=name.tar.gz                        
+       echo ${file#.*}                        used to remove pattern before the first apperance of dot from left side.
+       echo $(file##.*)                       used to remove pattern before the first appearence of dot from right side. 
+
+
+  > Diff GLOBS AND REGULAR 
+
+    > globs 
+        > matchs files 
+        > for loop 
+        > if condition 
+        > case statment 
+        > variable pattern matching 
+    > regular 
+        > matchs text 
+        > grep 
+        > awk 
+        > sed 
+        > if [[ ~= ]]
+
+> BRACE EXPANSION 
+
+  > {1..4}
+  > {1..10..2}                        // to get odd number
+  > {a..z..2}                         // out: a c e ....
+  > {10..1}                           // inverse 
+  > echo file{,.ca}                   // out: file file.ca 
+  > 
+
+ > Regular expression 
+   > grep , awk , sed , vim  , bash 
+   > ERE (extended regular expression)
+   > special char    
+       > .                  match single char  
+       > []                 char set 
+       > \                  escape single char  
+       > ( )                pattern grouping
+       > |                  alternate 
+       > ^abc               leading achor 
+       > abc$               tailing achor 
+       > [^abc]             Negates pattern 
+       > { } , * , +        repitator 
+   > special expression using  backslash 
+       > \b                 empty string at word edge 
+       > \B                 empty string not at word edge 
+       > \<                 empty string at beginning of word 
+       > \>                 empty string at ending of word
+       > \w                 match whole word 
+       > \W                 match a non-word 
+       > \s                 white space 
+       > \S                 not white space 
+   
+   > Peral regular expression 
+      > \K                  reset the match start , so only part after \K will match, ex: dest-branch=\"\K[/a-z0-9\-_]+  
+
+   > .{3}                   exactly 3 char 
+     .{3,}                  3 and more chars 
+     .{,3}                  zero to 3 char 
+     .{1,3}                 1 to 3 chars
+   
+   > Altering and Grouping 
+
+     > altering match one or more 
+     > grouping allow more than one pattern to match one.
+
+   >      
+
+CURL [curl <option> <url>]
+
+> curl http://site.{one, two, three}.com                                                 : Can give two  ,three DNS in set form. 
+> curl curl ftp://ftp.example.com/file[1-20].jpeg                                        : Range of number.
+> curl -# -O ftp://ftp.example.com/file.zip                                              : Replace the  meter from progress bar. 
+> curl -X GET https://api.example.com/resource                                           : Get http GET request.
+> curl -X POST -d "key1=value1&key2=value2"  https://api.example.com/resource            : http POST request , -d indicates data.
+> curl -o [file_name] [URL...]                                                           : Downloading the file from remote , -o indicates name of the file for downloaded file. 
+   > curl -o hello.zip ftp://speedtest.tele2.net/1MB.zip                                         
+> curl -T file_name ftp://example.com/upload/                                            : To upload the file using FTP , -T to upload.
+> curl -u username:password https://example.com/api                                      : Handling authentication , -u user credentails.
+> curl -C - [URL...]                                                                     : Resume the download that as been stopped due some reason.
+   > curl -C - -O ftp://speedtest.tele2.net/1MB.zip
+> curl --limit-rate [value] [URL]                                                        : Limit the upper bound rate.
+   > curl --limit-rate 1000K -O ftp://speedtest.tele2.net/1MB.zip   
+
+
+BASH PATTERN AND REGULAR EXPRESSION 
+---------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+PROJECT***********************************************************************************************************************************************
+
+
+1. RAM AVALIBILITY
+
+free -mt | grep "total" | awk '{print $4}'
+
+
+2. MONITORING DISK FREE SPACE AND GIVING ALERT EMAIL
+
+
+
+
+
+LEARNED ABOUT SSH AND SFTP**************************************************************************************************************************
+
+Subsystem sftp /usr/lib/openssh/sftp-server
+/etc/ssh/sshd_config
+
+
+                           
