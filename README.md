@@ -6,3 +6,4 @@ As a DevOps enthusiast, I find inspiration in the synergy between these realms, 
 
 
 https://drive.google.com/file/d/1BPThdaHtVs6eZnNNqP0IRlQiz5i_46SQ/view?usp=drivesdk
+linkedin.com/in/akshata-shettar-22212a281
