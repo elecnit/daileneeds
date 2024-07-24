@@ -7,3 +7,15 @@ As a DevOps enthusiast, I find inspiration in the synergy between these realms, 
 
 https://drive.google.com/file/d/1BPThdaHtVs6eZnNNqP0IRlQiz5i_46SQ/view?usp=drivesdk
 linkedin.com/in/akshata-shettar-22212a281
+
+Java Programming language
+Basics like list, Hashmap, loops, functions, classes, objects and execption handling.
+Object oriented programming language consisting of Class, Abstraction, Inheritance, Polymorphism and Encapsulation.
+Html, Css and JavaScript
+Design layouts that adapt to various screen sizes and devices for optimal viewing.
+Create visually appealing and intuitive interfaces for a better user experience.
+SQL
+Data Manipulation, searching and correcting extracting useful data.
+Quick learner and leadership. Critical thinking and Problem-solving.
+Verbal and Written communication.
+Teamwork skills and time management.
