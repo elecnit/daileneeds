@@ -21,3 +21,5 @@ Verbal and Written communication.
 Teamwork skills and time management.
 
 https://github.com/akshatashettar2001/Employee_Payroll_Management_System
+
+Developed the Employee Payroll Management System to manage employee records, salaries, work locations, and project assignments efficiently. Utilized PL/SQL features such as explicit and REF cursors, exception handling, and various views to handle complex data requirements. Created a Container Database (CDB) and a Pluggable Database (PDB) for organized data management, and built an index on the AccountDetails table to optimize performance. Designed an Entity-Relationship diagram to illustrate data flow and relationships, ensuring a clear understanding of the payroll management system.
